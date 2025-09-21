@@ -8,7 +8,7 @@ This script validates the functionality of the FarmDataRecord and FarmDataAnalyz
 import unittest
 import os
 import sys
-from farm_data_analyzer import FarmDataRecord, FarmDataAnalyzer
+from src.farm_data_analyzer import FarmDataRecord, FarmDataAnalyzer
 
 
 class TestFarmDataRecord(unittest.TestCase):

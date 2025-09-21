@@ -6,7 +6,7 @@ This script provides a comprehensive walkthrough of the application's features
 and demonstrates each required programming concept individually.
 """
 
-from farm_data_analyzer import FarmDataRecord, FarmDataAnalyzer
+from src.farm_data_analyzer import FarmDataRecord, FarmDataAnalyzer
 import os
 
 

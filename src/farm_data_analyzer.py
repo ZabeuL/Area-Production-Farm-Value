@@ -5,8 +5,8 @@ Farm Data Analyzer Application
 This Python application analyzes farm data from a CSV file containing area,
 production, and farm value information for potatoes across different regions.
 
-Author: [Your Full Name Here]
-Date: 2024
+Author: Lucas Zabeu
+Date: 2025-09-20
 Course: CST8333
 """
 
