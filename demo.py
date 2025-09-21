@@ -15,7 +15,7 @@ def main():
     """
     
     # CSV file path
-    csv_file = "CST8333-Area, production  farm value (32100358).csv"
+    csv_file = "data/CST8333-Area, production  farm value (32100358).csv"
     
     # Create analyzer instance and run complete application
     analyzer = FarmDataAnalyzer(csv_file)

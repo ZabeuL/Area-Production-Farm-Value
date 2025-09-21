@@ -65,7 +65,7 @@ class TestFarmDataAnalyzer:
     @pytest.fixture
     def csv_filename(self):
         """CSV filename for testing."""
-        return "CST8333-Area, production  farm value (32100358).csv"
+        return "data/CST8333-Area, production  farm value (32100358).csv"
     
     @pytest.fixture
     def analyzer(self, csv_filename):
