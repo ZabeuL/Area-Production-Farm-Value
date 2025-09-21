@@ -3,20 +3,23 @@
 Test script for the Farm Data Analyzer application.
 
 This script validates the functionality of the FarmDataRecord and FarmDataAnalyzer classes.
+Uses pytest for testing framework.
+
+Author: Lucas Zabeu
 """
 
-import unittest
+import pytest
 import os
-import sys
 from src.farm_data_analyzer import FarmDataRecord, FarmDataAnalyzer
 
 
-class TestFarmDataRecord(unittest.TestCase):
+class TestFarmDataRecord:
     """Test cases for the FarmDataRecord class."""
     
-    def setUp(self):
-        """Set up test data."""
-        self.record = FarmDataRecord(
+    @pytest.fixture
+    def sample_record(self):
+        """Create a sample FarmDataRecord for testing."""
+        return FarmDataRecord(
             ref_date="1908",
             geo="Canada",
             dguid="2016A000011124",
@@ -34,85 +37,59 @@ class TestFarmDataRecord(unittest.TestCase):
             decimals="0"
         )
     
-    def test_accessors(self):
+    def test_accessors(self, sample_record):
         """Test getter methods."""
-        self.assertEqual(self.record.ref_date, "1908")
-        self.assertEqual(self.record.geo, "Canada")
-        self.assertEqual(self.record.area_production_farm_value, "Seeded area, potatoes")
-        self.assertEqual(self.record.value, "503600")
+        assert sample_record.ref_date == "1908"
+        assert sample_record.geo == "Canada"
+        assert sample_record.area_production_farm_value == "Seeded area, potatoes"
+        assert sample_record.value == "503600"
     
-    def test_mutators(self):
+    def test_mutators(self, sample_record):
         """Test setter methods."""
-        self.record.ref_date = "1909"
-        self.record.geo = "United States"
-        self.assertEqual(self.record.ref_date, "1909")
-        self.assertEqual(self.record.geo, "United States")
+        sample_record.ref_date = "1909"
+        sample_record.geo = "United States"
+        assert sample_record.ref_date == "1909"
+        assert sample_record.geo == "United States"
     
-    def test_string_representation(self):
+    def test_string_representation(self, sample_record):
         """Test string representation."""
-        str_repr = str(self.record)
-        self.assertIn("Farm Data Record:", str_repr)
-        self.assertIn("1908", str_repr)
-        self.assertIn("Canada", str_repr)
+        str_repr = str(sample_record)
+        assert "Farm Data Record:" in str_repr
+        assert "1908" in str_repr
+        assert "Canada" in str_repr
 
 
-class TestFarmDataAnalyzer(unittest.TestCase):
+class TestFarmDataAnalyzer:
     """Test cases for the FarmDataAnalyzer class."""
     
-    def setUp(self):
-        """Set up test data."""
-        self.csv_filename = "CST8333-Area, production  farm value (32100358).csv"
-        self.analyzer = FarmDataAnalyzer(self.csv_filename)
+    @pytest.fixture
+    def csv_filename(self):
+        """CSV filename for testing."""
+        return "CST8333-Area, production  farm value (32100358).csv"
     
-    def test_initialization(self):
+    @pytest.fixture
+    def analyzer(self, csv_filename):
+        """Create a FarmDataAnalyzer instance for testing."""
+        return FarmDataAnalyzer(csv_filename)
+    
+    def test_initialization(self, analyzer, csv_filename):
         """Test analyzer initialization."""
-        self.assertEqual(self.analyzer.csv_filename, self.csv_filename)
-        self.assertEqual(len(self.analyzer.farm_records), 0)
-        self.assertEqual(self.analyzer.author_name, "Your Full Name Here")
+        assert analyzer.csv_filename == csv_filename
+        assert len(analyzer.farm_records) == 0
+        assert analyzer.author_name == "Your Full Name Here"
     
-    def test_file_exists(self):
+    def test_file_exists(self, csv_filename):
         """Test if the CSV file exists."""
-        self.assertTrue(os.path.exists(self.csv_filename), 
-                       f"CSV file {self.csv_filename} should exist")
+        assert os.path.exists(csv_filename), f"CSV file {csv_filename} should exist"
     
     def test_constants(self):
         """Test class constants."""
-        self.assertEqual(FarmDataAnalyzer.REF_DATE, "REF_DATE")
-        self.assertEqual(FarmDataAnalyzer.GEO, "GEO")
-        self.assertEqual(FarmDataAnalyzer.VALUE, "VALUE")
+        assert FarmDataAnalyzer.REF_DATE == "REF_DATE"
+        assert FarmDataAnalyzer.GEO == "GEO"
+        assert FarmDataAnalyzer.VALUE == "VALUE"
 
 
-def run_tests():
-    """Run all unit tests."""
-    print("=" * 60)
-    print("RUNNING FARM DATA ANALYZER TESTS")
-    print("=" * 60)
-    
-    # Create test suite
-    test_suite = unittest.TestSuite()
-    
-    # Add test cases
-    test_suite.addTest(unittest.makeSuite(TestFarmDataRecord))
-    test_suite.addTest(unittest.makeSuite(TestFarmDataAnalyzer))
-    
-    # Run tests
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(test_suite)
-    
-    # Print summary
-    print("\n" + "=" * 60)
-    if result.wasSuccessful():
-        print("ALL TESTS PASSED!")
-    else:
-        print(f"TESTS FAILED: {len(result.failures)} failures, {len(result.errors)} errors")
-    print("=" * 60)
-    
-    return result.wasSuccessful()
-
-
-if __name__ == "__main__":
-    # Run the tests
-    success = run_tests()
-    
-    # Exit with appropriate code
-    sys.exit(0 if success else 1)
+# Pytest will automatically discover and run tests when you run: pytest
+# You can also run specific test classes or methods:
+# pytest tests/test_farm_analyzer.py::TestFarmDataRecord::test_accessors
+# pytest tests/test_farm_analyzer.py::TestFarmDataAnalyzer -v
