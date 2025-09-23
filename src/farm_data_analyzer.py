@@ -396,7 +396,6 @@ class FarmDataAnalyzer:
         print(f"\n{'-' * 60}")
         print(f"Application completed successfully by {self.author_name}")
 
-
 def main() -> None:
     """
     Main function to initialize and run the Farm Data Analyzer application.
