@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module src.business.farm_data_service</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="src.html" class="white">src</a>.<a href="src.business.html" class="white">business</a>.farm_data_service</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Clucas%5Conedrive%5Ccollege%5Calgonquin%5Cterm%204%5Cprogramming%20language%20research%20project%5Careaproductionfarmvalue%5Carea-production-farm-value%5Csrc%5Cbusiness%5Cfarm_data_service.py">c:\users\lucas\onedrive\college\algonquin\term 4\programming language research project\areaproductionfarmvalue\area-production-farm-value\src\business\farm_data_service.py</a></td></tr></table>
+    <p><span class="code">farm_data_service.py<br>
+&nbsp;<br>
+Business&nbsp;layer&nbsp;for&nbsp;farm&nbsp;data&nbsp;operations.&nbsp;Manages&nbsp;in-memory&nbsp;data&nbsp;operations<br>
+and&nbsp;coordinates&nbsp;between&nbsp;the&nbsp;presentation&nbsp;and&nbsp;persistence&nbsp;layers.<br>
+&nbsp;<br>
+Classes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#FarmDataService">FarmDataService</a>:&nbsp;Business&nbsp;logic&nbsp;for&nbsp;farm&nbsp;data&nbsp;management.<br>
+&nbsp;<br>
+Author:&nbsp;Lucas&nbsp;Zabeu</span></p>
+<p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="src.business.farm_data_service.html#FarmDataService">FarmDataService</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="FarmDataService">class <strong>FarmDataService</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code">Business&nbsp;service&nbsp;class&nbsp;for&nbsp;farm&nbsp;data&nbsp;operations.<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;manages&nbsp;the&nbsp;in-memory&nbsp;data&nbsp;structure&nbsp;and&nbsp;provides&nbsp;business&nbsp;logic<br>
+for&nbsp;CRUD&nbsp;operations&nbsp;on&nbsp;farm&nbsp;data&nbsp;records.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="FarmDataService-__init__"><strong>__init__</strong></a>(self)</dt><dd><span class="code">Initialize&nbsp;the&nbsp;service&nbsp;with&nbsp;an&nbsp;empty&nbsp;data&nbsp;structure&nbsp;and&nbsp;repository.</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-add_record"><strong>add_record</strong></a>(self, record: src.entities.farm_data_record.FarmDataRecord) -&gt; bool</dt><dd><span class="code">Add&nbsp;a&nbsp;new&nbsp;record&nbsp;to&nbsp;the&nbsp;in-memory&nbsp;data&nbsp;structure.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;record:&nbsp;FarmDataRecord&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;add.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;if&nbsp;the&nbsp;record&nbsp;was&nbsp;added&nbsp;successfully.</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-delete_record"><strong>delete_record</strong></a>(self, index: int) -&gt; bool</dt><dd><span class="code">Delete&nbsp;a&nbsp;record&nbsp;from&nbsp;the&nbsp;in-memory&nbsp;data&nbsp;structure.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index:&nbsp;Zero-based&nbsp;index&nbsp;of&nbsp;the&nbsp;record&nbsp;to&nbsp;delete.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;if&nbsp;the&nbsp;record&nbsp;was&nbsp;deleted&nbsp;successfully,&nbsp;False&nbsp;if&nbsp;index&nbsp;is&nbsp;invalid.</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-get_all_records"><strong>get_all_records</strong></a>(self) -&gt; List[src.entities.farm_data_record.FarmDataRecord]</dt><dd><span class="code">Get&nbsp;all&nbsp;records&nbsp;currently&nbsp;in&nbsp;memory.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;all&nbsp;FarmDataRecord&nbsp;objects&nbsp;in&nbsp;memory.</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-get_record_by_index"><strong>get_record_by_index</strong></a>(self, index: int) -&gt; Optional[src.entities.farm_data_record.FarmDataRecord]</dt><dd><span class="code">Get&nbsp;a&nbsp;specific&nbsp;record&nbsp;by&nbsp;its&nbsp;index.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index:&nbsp;Zero-based&nbsp;index&nbsp;of&nbsp;the&nbsp;record&nbsp;to&nbsp;retrieve.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FarmDataRecord&nbsp;<a href="builtins.html#object">object</a>&nbsp;if&nbsp;found,&nbsp;None&nbsp;otherwise.</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-get_records_by_range"><strong>get_records_by_range</strong></a>(self, start_index: int, end_index: int) -&gt; List[tuple[int, src.entities.farm_data_record.FarmDataRecord]]</dt><dd><span class="code">Get&nbsp;records&nbsp;within&nbsp;a&nbsp;specified&nbsp;index&nbsp;range.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start_index:&nbsp;Starting&nbsp;index&nbsp;(inclusive).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end_index:&nbsp;Ending&nbsp;index&nbsp;(inclusive).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;tuples&nbsp;containing&nbsp;(index,&nbsp;record)&nbsp;for&nbsp;records&nbsp;in&nbsp;the&nbsp;range.</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-load_data_from_file"><strong>load_data_from_file</strong></a>(self, csv_filename: str, max_records: int = 100) -&gt; bool</dt><dd><span class="code">Load&nbsp;farm&nbsp;data&nbsp;from&nbsp;a&nbsp;CSV&nbsp;file&nbsp;into&nbsp;memory.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;csv_filename:&nbsp;Path&nbsp;to&nbsp;the&nbsp;CSV&nbsp;file&nbsp;containing&nbsp;farm&nbsp;data.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_records:&nbsp;Maximum&nbsp;number&nbsp;of&nbsp;records&nbsp;to&nbsp;load&nbsp;(default:&nbsp;100).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;if&nbsp;data&nbsp;was&nbsp;loaded&nbsp;successfully,&nbsp;False&nbsp;otherwise.</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-save_data_to_file"><strong>save_data_to_file</strong></a>(self, csv_filename: str) -&gt; bool</dt><dd><span class="code">Save&nbsp;current&nbsp;in-memory&nbsp;data&nbsp;to&nbsp;a&nbsp;CSV&nbsp;file.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;csv_filename:&nbsp;Path&nbsp;to&nbsp;the&nbsp;output&nbsp;CSV&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;if&nbsp;data&nbsp;was&nbsp;saved&nbsp;successfully,&nbsp;False&nbsp;otherwise.</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-search_records"><strong>search_records</strong></a>(self, search_term: str) -&gt; List[tuple[int, src.entities.farm_data_record.FarmDataRecord]]</dt><dd><span class="code">Search&nbsp;for&nbsp;records&nbsp;containing&nbsp;the&nbsp;specified&nbsp;term&nbsp;in&nbsp;any&nbsp;field.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;search_term:&nbsp;Term&nbsp;to&nbsp;search&nbsp;for&nbsp;in&nbsp;record&nbsp;fields.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;tuples&nbsp;containing&nbsp;(index,&nbsp;record)&nbsp;for&nbsp;matching&nbsp;records.</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-update_record"><strong>update_record</strong></a>(
+    self,
+    index: int,
+    record: src.entities.farm_data_record.FarmDataRecord
+) -&gt; bool</dt><dd><span class="code">Update&nbsp;an&nbsp;existing&nbsp;record&nbsp;at&nbsp;the&nbsp;specified&nbsp;index.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index:&nbsp;Zero-based&nbsp;index&nbsp;of&nbsp;the&nbsp;record&nbsp;to&nbsp;update.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;record:&nbsp;New&nbsp;FarmDataRecord&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;replace&nbsp;the&nbsp;existing&nbsp;one.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;if&nbsp;the&nbsp;record&nbsp;was&nbsp;updated&nbsp;successfully,&nbsp;False&nbsp;if&nbsp;index&nbsp;is&nbsp;invalid.</span></dd></dl>
+
+<hr>
+Readonly properties defined here:<br>
+<dl><dt><strong>record_count</strong></dt>
+<dd><span class="code">Get&nbsp;the&nbsp;number&nbsp;of&nbsp;records&nbsp;currently&nbsp;in&nbsp;memory.</span></dd>
+</dl>
+<dl><dt><strong>source_filename</strong></dt>
+<dd><span class="code">Get&nbsp;the&nbsp;filename&nbsp;of&nbsp;the&nbsp;currently&nbsp;loaded&nbsp;dataset.</span></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>List</strong> = typing.List<br>
+<strong>Optional</strong> = typing.Optional</td></tr></table>
+</body></html>

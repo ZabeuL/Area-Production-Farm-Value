@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module src.persistence.farm_data_repository</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="src.html" class="white">src</a>.<a href="src.persistence.html" class="white">persistence</a>.farm_data_repository</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Clucas%5Conedrive%5Ccollege%5Calgonquin%5Cterm%204%5Cprogramming%20language%20research%20project%5Careaproductionfarmvalue%5Carea-production-farm-value%5Csrc%5Cpersistence%5Cfarm_data_repository.py">c:\users\lucas\onedrive\college\algonquin\term 4\programming language research project\areaproductionfarmvalue\area-production-farm-value\src\persistence\farm_data_repository.py</a></td></tr></table>
+    <p><span class="code">farm_data_repository.py<br>
+&nbsp;<br>
+Persistence&nbsp;layer&nbsp;for&nbsp;farm&nbsp;data&nbsp;operations.&nbsp;Handles&nbsp;all&nbsp;file&nbsp;I/O&nbsp;operations<br>
+including&nbsp;reading&nbsp;from&nbsp;CSV&nbsp;files&nbsp;and&nbsp;writing&nbsp;data&nbsp;back&nbsp;to&nbsp;disk.<br>
+&nbsp;<br>
+Classes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#FarmDataRepository">FarmDataRepository</a>:&nbsp;Handles&nbsp;file&nbsp;operations&nbsp;for&nbsp;farm&nbsp;data&nbsp;records.<br>
+&nbsp;<br>
+Author:&nbsp;Lucas&nbsp;Zabeu</span></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="csv.html">csv</a><br>
+</td><td class="multicolumn"><a href="os.html">os</a><br>
+</td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="src.persistence.farm_data_repository.html#FarmDataRepository">FarmDataRepository</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="FarmDataRepository">class <strong>FarmDataRepository</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code">Repository&nbsp;class&nbsp;for&nbsp;farm&nbsp;data&nbsp;persistence&nbsp;operations.<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;handles&nbsp;all&nbsp;file&nbsp;I/O&nbsp;operations&nbsp;including:<br>
+-&nbsp;Reading&nbsp;farm&nbsp;data&nbsp;from&nbsp;CSV&nbsp;files<br>
+-&nbsp;Writing&nbsp;farm&nbsp;data&nbsp;to&nbsp;CSV&nbsp;files<br>
+-&nbsp;Exception&nbsp;handling&nbsp;for&nbsp;file&nbsp;operations<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="FarmDataRepository-__init__"><strong>__init__</strong></a>(self)</dt><dd><span class="code">Initialize&nbsp;the&nbsp;repository.</span></dd></dl>
+
+<dl><dt><a name="FarmDataRepository-load_records_from_csv"><strong>load_records_from_csv</strong></a>(self, csv_filename: str, max_records: int = 100) -&gt; List[src.entities.farm_data_record.FarmDataRecord]</dt><dd><span class="code">Load&nbsp;farm&nbsp;data&nbsp;records&nbsp;from&nbsp;a&nbsp;CSV&nbsp;file.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;csv_filename:&nbsp;Path&nbsp;to&nbsp;the&nbsp;CSV&nbsp;file&nbsp;containing&nbsp;farm&nbsp;data.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_records:&nbsp;Maximum&nbsp;number&nbsp;of&nbsp;records&nbsp;to&nbsp;load&nbsp;(default:&nbsp;100).<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;FarmDataRecord&nbsp;objects&nbsp;loaded&nbsp;from&nbsp;the&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Raises:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FileNotFoundError:&nbsp;If&nbsp;the&nbsp;specified&nbsp;CSV&nbsp;file&nbsp;does&nbsp;not&nbsp;exist.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PermissionError:&nbsp;If&nbsp;the&nbsp;program&nbsp;lacks&nbsp;permission&nbsp;to&nbsp;read&nbsp;the&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;csv.Error:&nbsp;If&nbsp;there&nbsp;is&nbsp;an&nbsp;error&nbsp;parsing&nbsp;the&nbsp;CSV&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Exception:&nbsp;For&nbsp;any&nbsp;other&nbsp;unexpected&nbsp;errors&nbsp;during&nbsp;file&nbsp;processing.</span></dd></dl>
+
+<dl><dt><a name="FarmDataRepository-save_records_to_csv"><strong>save_records_to_csv</strong></a>(
+    self,
+    records: List[src.entities.farm_data_record.FarmDataRecord],
+    csv_filename: str
+) -&gt; bool</dt><dd><span class="code">Save&nbsp;farm&nbsp;data&nbsp;records&nbsp;to&nbsp;a&nbsp;CSV&nbsp;file.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;records:&nbsp;List&nbsp;of&nbsp;FarmDataRecord&nbsp;objects&nbsp;to&nbsp;save.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;csv_filename:&nbsp;Path&nbsp;to&nbsp;the&nbsp;output&nbsp;CSV&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;if&nbsp;the&nbsp;file&nbsp;was&nbsp;saved&nbsp;successfully,&nbsp;False&nbsp;otherwise.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Raises:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PermissionError:&nbsp;If&nbsp;the&nbsp;program&nbsp;lacks&nbsp;permission&nbsp;to&nbsp;write&nbsp;the&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Exception:&nbsp;For&nbsp;any&nbsp;other&nbsp;unexpected&nbsp;errors&nbsp;during&nbsp;file&nbsp;writing.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>AREA_PRODUCTION_FARM_VALUE</strong> = 'Area, production and farm value of potatoes'</dl>
+
+<dl><dt><strong>COORDINATE</strong> = 'COORDINATE'</dl>
+
+<dl><dt><strong>DECIMALS</strong> = 'DECIMALS'</dl>
+
+<dl><dt><strong>DGUID</strong> = 'DGUID'</dl>
+
+<dl><dt><strong>GEO</strong> = 'GEO'</dl>
+
+<dl><dt><strong>REF_DATE</strong> = 'REF_DATE'</dl>
+
+<dl><dt><strong>SCALAR_FACTOR</strong> = 'SCALAR_FACTOR'</dl>
+
+<dl><dt><strong>SCALAR_ID</strong> = 'SCALAR_ID'</dl>
+
+<dl><dt><strong>STATUS</strong> = 'STATUS'</dl>
+
+<dl><dt><strong>SYMBOL</strong> = 'SYMBOL'</dl>
+
+<dl><dt><strong>TERMINATED</strong> = 'TERMINATED'</dl>
+
+<dl><dt><strong>UOM</strong> = 'UOM'</dl>
+
+<dl><dt><strong>UOM_ID</strong> = 'UOM_ID'</dl>
+
+<dl><dt><strong>VALUE</strong> = 'VALUE'</dl>
+
+<dl><dt><strong>VECTOR</strong> = 'VECTOR'</dl>
+
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>List</strong> = typing.List<br>
+<strong>Optional</strong> = typing.Optional</td></tr></table>
+</body></html>

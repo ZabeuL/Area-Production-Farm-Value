@@ -22,12 +22,7 @@ Raises:
     None
 """
 
-#!/usr/bin/env python3
-
-import csv
-import os
-import sys
-from typing import List, Optional
+from typing import Optional
 
 
 class FarmDataRecord:
@@ -246,3 +241,28 @@ class FarmDataRecord:
                 f"  Value: {self._value} {self._uom}\n"
                 f"  Vector: {self._vector}\n"
                 f"  Coordinate: {self._coordinate}")
+    
+    def to_csv_row(self) -> dict:
+        """
+        Convert the record to a dictionary suitable for CSV writing.
+        
+        Returns:
+            Dictionary with column names as keys and record values as values.
+        """
+        return {
+            "REF_DATE": self._ref_date,
+            "GEO": self._geo,
+            "DGUID": self._dguid,
+            "Area, production and farm value of potatoes": self._area_production_farm_value,
+            "UOM": self._uom,
+            "UOM_ID": self._uom_id,
+            "SCALAR_FACTOR": self._scalar_factor,
+            "SCALAR_ID": self._scalar_id,
+            "VECTOR": self._vector,
+            "COORDINATE": self._coordinate,
+            "VALUE": self._value,
+            "STATUS": self._status,
+            "SYMBOL": self._symbol,
+            "TERMINATED": self._terminated,
+            "DECIMALS": self._decimals
+        }

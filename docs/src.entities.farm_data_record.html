@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module src.entities.farm_data_record</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="src.html" class="white">src</a>.<a href="src.entities.html" class="white">entities</a>.farm_data_record</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Clucas%5Conedrive%5Ccollege%5Calgonquin%5Cterm%204%5Cprogramming%20language%20research%20project%5Careaproductionfarmvalue%5Carea-production-farm-value%5Csrc%5Centities%5Cfarm_data_record.py">c:\users\lucas\onedrive\college\algonquin\term 4\programming language research project\areaproductionfarmvalue\area-production-farm-value\src\entities\farm_data_record.py</a></td></tr></table>
+    <p><span class="code">farm_data_record.py<br>
+&nbsp;<br>
+This&nbsp;module&nbsp;defines&nbsp;the&nbsp;<a href="#FarmDataRecord">FarmDataRecord</a>&nbsp;class,&nbsp;which&nbsp;represents&nbsp;a&nbsp;single<br>
+row&nbsp;of&nbsp;farm&nbsp;data&nbsp;from&nbsp;a&nbsp;CSV&nbsp;file.&nbsp;The&nbsp;class&nbsp;provides&nbsp;accessors&nbsp;and&nbsp;mutators<br>
+for&nbsp;each&nbsp;field,&nbsp;allowing&nbsp;for&nbsp;encapsulated&nbsp;data&nbsp;management&nbsp;and&nbsp;easy&nbsp;integration<br>
+with&nbsp;data&nbsp;analysis&nbsp;workflows.<br>
+&nbsp;<br>
+Classes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#FarmDataRecord">FarmDataRecord</a>:&nbsp;Represents&nbsp;a&nbsp;single&nbsp;farm&nbsp;data&nbsp;entry&nbsp;with&nbsp;fields&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reference&nbsp;date,&nbsp;location,&nbsp;measurement&nbsp;type,&nbsp;value,&nbsp;and&nbsp;more.<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;record&nbsp;=&nbsp;<a href="#FarmDataRecord">FarmDataRecord</a>(ref_date="2024",&nbsp;geo="Ontario",&nbsp;value="1000")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print(record.ref_date)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;record.value&nbsp;=&nbsp;"1200"<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Raises:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</span></p>
+<p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="src.entities.farm_data_record.html#FarmDataRecord">FarmDataRecord</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="FarmDataRecord">class <strong>FarmDataRecord</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#FarmDataRecord">FarmDataRecord</a>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ref_date:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;geo:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dguid:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;area_production_farm_value:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uom:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uom_id:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;scalar_factor:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;scalar_id:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vector:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;coordinate:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;symbol:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;terminated:&nbsp;str&nbsp;=&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;decimals:&nbsp;str&nbsp;=&nbsp;''<br>
+)<br>
+&nbsp;<br>
+Record&nbsp;<a href="builtins.html#object">object</a>&nbsp;(entity/data-transfer&nbsp;<a href="builtins.html#object">object</a>)&nbsp;representing&nbsp;a&nbsp;single&nbsp;farm&nbsp;data&nbsp;entry.<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;uses&nbsp;column&nbsp;names&nbsp;from&nbsp;the&nbsp;dataset&nbsp;as&nbsp;attribute&nbsp;names&nbsp;and&nbsp;provides<br>
+accessors&nbsp;and&nbsp;mutators&nbsp;for&nbsp;each&nbsp;field.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="FarmDataRecord-__init__"><strong>__init__</strong></a>(
+    self,
+    ref_date: str = '',
+    geo: str = '',
+    dguid: str = '',
+    area_production_farm_value: str = '',
+    uom: str = '',
+    uom_id: str = '',
+    scalar_factor: str = '',
+    scalar_id: str = '',
+    vector: str = '',
+    coordinate: str = '',
+    value: str = '',
+    status: str = '',
+    symbol: str = '',
+    terminated: str = '',
+    decimals: str = ''
+)</dt><dd><span class="code">Initialize&nbsp;a&nbsp;<a href="#FarmDataRecord">FarmDataRecord</a>&nbsp;with&nbsp;data&nbsp;from&nbsp;CSV&nbsp;columns.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ref_date:&nbsp;Reference&nbsp;date&nbsp;for&nbsp;the&nbsp;data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;geo:&nbsp;Geographic&nbsp;location<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dguid:&nbsp;Geographic&nbsp;unique&nbsp;identifier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;area_production_farm_value:&nbsp;Description&nbsp;of&nbsp;the&nbsp;measurement&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uom:&nbsp;Unit&nbsp;of&nbsp;measurement<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uom_id:&nbsp;Unit&nbsp;of&nbsp;measurement&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;scalar_factor:&nbsp;Scalar&nbsp;factor&nbsp;for&nbsp;the&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;scalar_id:&nbsp;Scalar&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vector:&nbsp;Vector&nbsp;identifier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;coordinate:&nbsp;Coordinate&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value:&nbsp;The&nbsp;actual&nbsp;data&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;Data&nbsp;status<br>
+&nbsp;&nbsp;&nbsp;&nbsp;symbol:&nbsp;Symbol&nbsp;indicator<br>
+&nbsp;&nbsp;&nbsp;&nbsp;terminated:&nbsp;Termination&nbsp;flag<br>
+&nbsp;&nbsp;&nbsp;&nbsp;decimals:&nbsp;Number&nbsp;of&nbsp;decimal&nbsp;places</span></dd></dl>
+
+<dl><dt><a name="FarmDataRecord-__str__"><strong>__str__</strong></a>(self) -&gt; str</dt><dd><span class="code">String&nbsp;representation&nbsp;of&nbsp;the&nbsp;farm&nbsp;data&nbsp;record.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Formatted&nbsp;string&nbsp;showing&nbsp;key&nbsp;information&nbsp;from&nbsp;the&nbsp;record</span></dd></dl>
+
+<dl><dt><a name="FarmDataRecord-to_csv_row"><strong>to_csv_row</strong></a>(self) -&gt; dict</dt><dd><span class="code">Convert&nbsp;the&nbsp;record&nbsp;to&nbsp;a&nbsp;dictionary&nbsp;suitable&nbsp;for&nbsp;CSV&nbsp;writing.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dictionary&nbsp;with&nbsp;column&nbsp;names&nbsp;as&nbsp;keys&nbsp;and&nbsp;record&nbsp;values&nbsp;as&nbsp;values.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<dl><dt><strong>area_production_farm_value</strong></dt>
+<dd><span class="code">Get&nbsp;area,&nbsp;production&nbsp;and&nbsp;farm&nbsp;value&nbsp;description.</span></dd>
+</dl>
+<dl><dt><strong>coordinate</strong></dt>
+<dd><span class="code">Get&nbsp;coordinate&nbsp;value.</span></dd>
+</dl>
+<dl><dt><strong>decimals</strong></dt>
+<dd><span class="code">Get&nbsp;number&nbsp;of&nbsp;decimal&nbsp;places.</span></dd>
+</dl>
+<dl><dt><strong>dguid</strong></dt>
+<dd><span class="code">Get&nbsp;geographic&nbsp;unique&nbsp;identifier.</span></dd>
+</dl>
+<dl><dt><strong>geo</strong></dt>
+<dd><span class="code">Get&nbsp;geographic&nbsp;location.</span></dd>
+</dl>
+<dl><dt><strong>ref_date</strong></dt>
+<dd><span class="code">Get&nbsp;reference&nbsp;date.</span></dd>
+</dl>
+<dl><dt><strong>scalar_factor</strong></dt>
+<dd><span class="code">Get&nbsp;scalar&nbsp;factor.</span></dd>
+</dl>
+<dl><dt><strong>scalar_id</strong></dt>
+<dd><span class="code">Get&nbsp;scalar&nbsp;ID.</span></dd>
+</dl>
+<dl><dt><strong>status</strong></dt>
+<dd><span class="code">Get&nbsp;data&nbsp;status.</span></dd>
+</dl>
+<dl><dt><strong>symbol</strong></dt>
+<dd><span class="code">Get&nbsp;symbol&nbsp;indicator.</span></dd>
+</dl>
+<dl><dt><strong>terminated</strong></dt>
+<dd><span class="code">Get&nbsp;termination&nbsp;flag.</span></dd>
+</dl>
+<dl><dt><strong>uom</strong></dt>
+<dd><span class="code">Get&nbsp;unit&nbsp;of&nbsp;measurement.</span></dd>
+</dl>
+<dl><dt><strong>uom_id</strong></dt>
+<dd><span class="code">Get&nbsp;unit&nbsp;of&nbsp;measurement&nbsp;ID.</span></dd>
+</dl>
+<dl><dt><strong>value</strong></dt>
+<dd><span class="code">Get&nbsp;the&nbsp;data&nbsp;value.</span></dd>
+</dl>
+<dl><dt><strong>vector</strong></dt>
+<dd><span class="code">Get&nbsp;vector&nbsp;identifier.</span></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>Optional</strong> = typing.Optional</td></tr></table>
+</body></html>

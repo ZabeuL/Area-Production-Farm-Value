@@ -1,33 +1,174 @@
-# Farm Data Analyzer
+# Farm Data Analyzer - Layered Architecture
 
-A Python application that analyzes farm data from a CSV file containing area, production, and farm value information for potatoes across different regions.
+**Author: Lucas Zabeu**
 
-## Author
-**Your Full Name Here** - [Replace with your actual name]
+An interactive Python application for analyzing farm production data with a layered architecture design.
 
-## Overview
-This project demonstrates various programming concepts including:
-- Object-oriented programming with record/entity objects
-- File I/O operations with exception handling
-- Data parsing and manipulation
-- Loop structures and data display
-- API library usage (csv module)
-- Comprehensive documentation
+## Architecture Overview
+
+This project implements a three-layered architecture pattern:
+
+### 🎨 **Presentation Layer** (`src/presentation/`)
+- **Purpose**: Handles all user interactions and display logic
+- **Components**:
+  - `FarmDataUI`: Interactive menu-driven user interface
+- **Responsibilities**:
+  - Display menus and prompts
+  - Process user input and validation
+  - Format and display data to users
+  - Coordinate with business layer for operations
+
+### 🧠 **Business Layer** (`src/business/`)
+- **Purpose**: Contains application logic and manages in-memory data
+- **Components**:
+  - `FarmDataService`: Core business logic and data management
+- **Responsibilities**:
+  - Manage the in-memory data structure (list of records)
+  - Implement CRUD operations (Create, Read, Update, Delete)
+  - Provide search and filtering functionality
+  - Coordinate between presentation and persistence layers
+
+### 💾 **Persistence Layer** (`src/persistence/`)
+- **Purpose**: Handles all file I/O operations
+- **Components**:
+  - `FarmDataRepository`: File operations and data access
+- **Responsibilities**:
+  - Read data from CSV files with exception handling
+  - Write data to CSV files
+  - Handle file-related errors gracefully
+
+### 📊 **Entity Layer** (`src/entities/`)
+- **Purpose**: Data models and record objects
+- **Components**:
+  - `FarmDataRecord`: Represents a single farm data entry
+- **Responsibilities**:
+  - Encapsulate farm data with proper accessors/mutators
+  - Provide data validation and formatting
+  - Enable easy serialization to/from CSV format
 
 ## Features
 
-### 1. Record Object (FarmDataRecord)
-- Uses column names from the dataset as variable names and attributes
-- Implements accessors (getters) and mutators (setters) for all fields
-- Provides string representation for easy data display
+### 🚀 **Interactive Functionality**
+1. **Data Loading**: Load/reload data from CSV dataset (up to 100 records)
+2. **Data Persistence**: Save in-memory data to new CSV files
+3. **Data Display**: 
+   - Display single records by index
+   - Display multiple records (all, by range, or first N)
+4. **Data Management**:
+   - Create new records with full field input
+   - Edit existing records with current value defaults
+   - Delete records with confirmation
+   - Search records across key fields
 
-### 2. File I/O with Exception Handling
-- Reads CSV data using Python's built-in csv module
-- Handles various file-related exceptions:
-  - FileNotFoundError
-  - PermissionError
-  - csv.Error
-  - General exceptions
+### 🛡️ **Error Handling**
+- Comprehensive exception handling for file operations
+- Input validation for user interactions
+- Graceful handling of missing files or permissions
+- User-friendly error messages throughout
+
+### 👤 **Author Attribution**
+- "Lucas Zabeu" displayed prominently in all interfaces
+- Author name visible in headers, menus, and prompts
+- Consistent branding throughout the application
+
+## Usage
+
+### Running the Application
+```bash
+python main.py
+```
+
+### Default Dataset
+The application automatically loads the default dataset on startup:
+```
+data/CST8333-Area, production  farm value (32100358).csv
+```
+
+### Interactive Menu Options
+1. **Load/Reload data** - Load fresh data from CSV file
+2. **Save data** - Export current data to new CSV file
+3. **Display single record** - View one record by index
+4. **Display multiple records** - View records with various options
+5. **Create new record** - Add new farm data entry
+6. **Edit existing record** - Modify record fields
+7. **Delete record** - Remove record with confirmation
+8. **Search records** - Find records by term matching
+9. **Exit application** - Close the program
+
+## Project Structure
+
+```
+📁 Area-Production-Farm-Value/
+├── 📁 src/
+│   ├── 📁 presentation/          # UI Layer
+│   │   ├── __init__.py
+│   │   └── farm_data_ui.py       # Interactive user interface
+│   ├── 📁 business/              # Business Logic Layer
+│   │   ├── __init__.py
+│   │   └── farm_data_service.py  # Data management & operations
+│   ├── 📁 persistence/           # Data Access Layer
+│   │   ├── __init__.py
+│   │   └── farm_data_repository.py # File I/O operations
+│   ├── 📁 entities/              # Data Models
+│   │   ├── __init__.py
+│   │   └── farm_data_record.py   # Farm record entity
+│   └── __init__.py
+├── 📁 tests/                     # Unit tests
+│   ├── __init__.py
+│   └── test_farm_analyzer.py
+├── 📁 data/                      # Dataset files
+│   └── CST8333-Area, production  farm value (32100358).csv
+├── 📁 docs/                      # Generated documentation
+│   ├── index.html               # Documentation index
+│   └── *.html                   # Module documentation
+├── main.py                      # Application entry point
+├── generate_docs.py             # Documentation generator
+└── README.md                    # This file
+```
+
+## Technical Implementation
+
+### Data Management
+- **In-Memory Storage**: Uses Python list for storing up to 100 `FarmDataRecord` objects
+- **CSV Processing**: Leverages Python's `csv` module for reliable file operations
+- **Exception Handling**: Comprehensive error handling for file operations and user input
+
+### Design Patterns
+- **Layered Architecture**: Clear separation of concerns across layers
+- **Repository Pattern**: Centralized data access through `FarmDataRepository`
+- **Service Layer Pattern**: Business logic encapsulated in `FarmDataService`
+- **Entity Pattern**: Data encapsulation with `FarmDataRecord`
+
+### Key Benefits
+- **Maintainability**: Clear separation of responsibilities
+- **Testability**: Each layer can be tested independently
+- **Scalability**: Easy to extend with new features
+- **Reusability**: Components can be reused across different interfaces
+
+## Requirements Met
+
+✅ **Layered Design**: Presentation, Business, and Persistence layers implemented  
+✅ **File I/O on Startup**: Loads 100 records from CSV with exception handling  
+✅ **Author Display**: "Lucas Zabeu" prominently displayed throughout interface  
+✅ **Interactive Options**: All requested functionality implemented:
+  - ✅ Reload data from dataset
+  - ✅ Persist data to new CSV file
+  - ✅ Display single or multiple records
+  - ✅ Create new records
+  - ✅ Edit existing records
+  - ✅ Delete records from memory
+
+## Documentation
+
+Generated HTML documentation is available in the `docs/` folder:
+- Open `docs/index.html` in a web browser for module documentation
+- Documentation includes all layers and their components
+
+## Author
+
+**Lucas Zabeu**  
+Programming Language Research Project  
+Algonquin College
 
 ### 3. Data Structure
 - Stores parsed records in a Python list (array-like structure)
