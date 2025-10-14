@@ -9,9 +9,14 @@
 <tr class="heading-text decor">
 <td class="title">&nbsp;<br><strong class="title"><a href="tests.html" class="white">tests</a>.test_farm_analyzer</strong></td>
 <td class="extra"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Clucas%5Conedrive%5Ccollege%5Calgonquin%5Cterm%204%5Cprogramming%20language%20research%20project%5Careaproductionfarmvalue%5Carea-production-farm-value%5Ctests%5Ctest_farm_analyzer.py">c:\users\lucas\onedrive\college\algonquin\term 4\programming language research project\areaproductionfarmvalue\area-production-farm-value\tests\test_farm_analyzer.py</a></td></tr></table>
-    <p><span class="code">Test&nbsp;script&nbsp;for&nbsp;the&nbsp;Farm&nbsp;Data&nbsp;Analyzer&nbsp;application.<br>
+    <p><span class="code">Test&nbsp;script&nbsp;for&nbsp;the&nbsp;Farm&nbsp;Data&nbsp;Analyzer&nbsp;application&nbsp;with&nbsp;layered&nbsp;architecture.<br>
 &nbsp;<br>
-This&nbsp;script&nbsp;validates&nbsp;the&nbsp;functionality&nbsp;of&nbsp;the&nbsp;FarmDataRecord&nbsp;and&nbsp;FarmDataAnalyzer&nbsp;classes.<br>
+This&nbsp;script&nbsp;validates&nbsp;the&nbsp;functionality&nbsp;of&nbsp;the&nbsp;layered&nbsp;components:<br>
+-&nbsp;FarmDataRecord&nbsp;(Entity&nbsp;layer)<br>
+-&nbsp;FarmDataRepository&nbsp;(Persistence&nbsp;layer)<br>
+-&nbsp;FarmDataService&nbsp;(Business&nbsp;layer)<br>
+-&nbsp;FarmDataUI&nbsp;(Presentation&nbsp;layer)<br>
+&nbsp;<br>
 Uses&nbsp;pytest&nbsp;for&nbsp;testing&nbsp;framework.<br>
 &nbsp;<br>
 Author:&nbsp;Lucas&nbsp;Zabeu</span></p>
@@ -23,7 +28,8 @@ Author:&nbsp;Lucas&nbsp;Zabeu</span></p>
 <tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
 <td class="singlecolumn"><table><tr><td class="multicolumn"><a href="os.html">os</a><br>
 </td><td class="multicolumn"><a href="pytest.html">pytest</a><br>
-</td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+</td><td class="multicolumn"><a href="tempfile.html">tempfile</a><br>
+</td><td class="multicolumn"></td></tr></table></td></tr></table><p>
 <table class="section">
 <tr class="decor index-decor heading-text">
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
@@ -33,29 +39,32 @@ Author:&nbsp;Lucas&nbsp;Zabeu</span></p>
 <dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
 </dt><dd>
 <dl>
-<dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestFarmDataAnalyzer">TestFarmDataAnalyzer</a>
-</dt><dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestFarmDataRecord">TestFarmDataRecord</a>
+<dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestFarmDataRecord">TestFarmDataRecord</a>
+</dt><dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestFarmDataRepository">TestFarmDataRepository</a>
+</dt><dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestFarmDataService">TestFarmDataService</a>
+</dt><dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestFarmDataUI">TestFarmDataUI</a>
+</dt><dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestIntegration">TestIntegration</a>
 </dt></dl>
 </dd>
 </dl>
  <p>
 <table class="section">
 <tr class="decor title-decor heading-text">
-<td class="section-title" colspan=3>&nbsp;<br><a name="TestFarmDataAnalyzer">class <strong>TestFarmDataAnalyzer</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+<td class="section-title" colspan=3>&nbsp;<br><a name="TestFarmDataRecord">class <strong>TestFarmDataRecord</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
     
 <tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
-<td class="decor title-decor" colspan=2><span class="code">Test&nbsp;cases&nbsp;for&nbsp;the&nbsp;FarmDataAnalyzer&nbsp;class.<br>&nbsp;</span></td></tr>
+<td class="decor title-decor" colspan=2><span class="code">Test&nbsp;cases&nbsp;for&nbsp;the&nbsp;FarmDataRecord&nbsp;entity&nbsp;class.<br>&nbsp;</span></td></tr>
 <tr><td>&nbsp;</td>
 <td class="singlecolumn">Methods defined here:<br>
-<dl><dt><a name="TestFarmDataAnalyzer-analyzer"><strong>analyzer</strong></a>(self, csv_filename)</dt><dd><span class="code">Create&nbsp;a&nbsp;FarmDataAnalyzer&nbsp;instance&nbsp;for&nbsp;testing.</span></dd></dl>
+<dl><dt><a name="TestFarmDataRecord-sample_record"><strong>sample_record</strong></a>(self)</dt><dd><span class="code">Create&nbsp;a&nbsp;sample&nbsp;FarmDataRecord&nbsp;for&nbsp;testing.</span></dd></dl>
 
-<dl><dt><a name="TestFarmDataAnalyzer-csv_filename"><strong>csv_filename</strong></a>(self)</dt><dd><span class="code">CSV&nbsp;filename&nbsp;for&nbsp;testing.</span></dd></dl>
+<dl><dt><a name="TestFarmDataRecord-test_accessors"><strong>test_accessors</strong></a>(self, sample_record)</dt><dd><span class="code">Test&nbsp;getter&nbsp;methods.</span></dd></dl>
 
-<dl><dt><a name="TestFarmDataAnalyzer-test_constants"><strong>test_constants</strong></a>(self)</dt><dd><span class="code">Test&nbsp;class&nbsp;constants.</span></dd></dl>
+<dl><dt><a name="TestFarmDataRecord-test_mutators"><strong>test_mutators</strong></a>(self, sample_record)</dt><dd><span class="code">Test&nbsp;setter&nbsp;methods.</span></dd></dl>
 
-<dl><dt><a name="TestFarmDataAnalyzer-test_file_exists"><strong>test_file_exists</strong></a>(self, csv_filename)</dt><dd><span class="code">Test&nbsp;if&nbsp;the&nbsp;CSV&nbsp;file&nbsp;exists.</span></dd></dl>
+<dl><dt><a name="TestFarmDataRecord-test_string_representation"><strong>test_string_representation</strong></a>(self, sample_record)</dt><dd><span class="code">Test&nbsp;string&nbsp;representation.</span></dd></dl>
 
-<dl><dt><a name="TestFarmDataAnalyzer-test_initialization"><strong>test_initialization</strong></a>(self, analyzer, csv_filename)</dt><dd><span class="code">Test&nbsp;analyzer&nbsp;initialization.</span></dd></dl>
+<dl><dt><a name="TestFarmDataRecord-test_to_csv_row"><strong>test_to_csv_row</strong></a>(self, sample_record)</dt><dd><span class="code">Test&nbsp;CSV&nbsp;row&nbsp;conversion.</span></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -68,19 +77,108 @@ Data descriptors defined here:<br>
 </td></tr></table> <p>
 <table class="section">
 <tr class="decor title-decor heading-text">
-<td class="section-title" colspan=3>&nbsp;<br><a name="TestFarmDataRecord">class <strong>TestFarmDataRecord</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+<td class="section-title" colspan=3>&nbsp;<br><a name="TestFarmDataRepository">class <strong>TestFarmDataRepository</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
     
 <tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
-<td class="decor title-decor" colspan=2><span class="code">Test&nbsp;cases&nbsp;for&nbsp;the&nbsp;FarmDataRecord&nbsp;class.<br>&nbsp;</span></td></tr>
+<td class="decor title-decor" colspan=2><span class="code">Test&nbsp;cases&nbsp;for&nbsp;the&nbsp;FarmDataRepository&nbsp;persistence&nbsp;layer.<br>&nbsp;</span></td></tr>
 <tr><td>&nbsp;</td>
 <td class="singlecolumn">Methods defined here:<br>
-<dl><dt><a name="TestFarmDataRecord-sample_record"><strong>sample_record</strong></a>(self)</dt><dd><span class="code">Create&nbsp;a&nbsp;sample&nbsp;FarmDataRecord&nbsp;for&nbsp;testing.</span></dd></dl>
+<dl><dt><a name="TestFarmDataRepository-csv_filename"><strong>csv_filename</strong></a>(self)</dt><dd><span class="code">CSV&nbsp;filename&nbsp;for&nbsp;testing.</span></dd></dl>
 
-<dl><dt><a name="TestFarmDataRecord-test_accessors"><strong>test_accessors</strong></a>(self, sample_record)</dt><dd><span class="code">Test&nbsp;getter&nbsp;methods.</span></dd></dl>
+<dl><dt><a name="TestFarmDataRepository-repository"><strong>repository</strong></a>(self)</dt><dd><span class="code">Create&nbsp;a&nbsp;FarmDataRepository&nbsp;instance&nbsp;for&nbsp;testing.</span></dd></dl>
 
-<dl><dt><a name="TestFarmDataRecord-test_mutators"><strong>test_mutators</strong></a>(self, sample_record)</dt><dd><span class="code">Test&nbsp;setter&nbsp;methods.</span></dd></dl>
+<dl><dt><a name="TestFarmDataRepository-sample_records"><strong>sample_records</strong></a>(self)</dt><dd><span class="code">Create&nbsp;sample&nbsp;records&nbsp;for&nbsp;testing.</span></dd></dl>
 
-<dl><dt><a name="TestFarmDataRecord-test_string_representation"><strong>test_string_representation</strong></a>(self, sample_record)</dt><dd><span class="code">Test&nbsp;string&nbsp;representation.</span></dd></dl>
+<dl><dt><a name="TestFarmDataRepository-test_constants"><strong>test_constants</strong></a>(self, repository)</dt><dd><span class="code">Test&nbsp;repository&nbsp;constants.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataRepository-test_load_records_file_not_found"><strong>test_load_records_file_not_found</strong></a>(self, repository)</dt><dd><span class="code">Test&nbsp;loading&nbsp;from&nbsp;non-existent&nbsp;file.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataRepository-test_load_records_from_csv"><strong>test_load_records_from_csv</strong></a>(self, repository, csv_filename)</dt><dd><span class="code">Test&nbsp;loading&nbsp;records&nbsp;from&nbsp;CSV&nbsp;file.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataRepository-test_save_empty_records"><strong>test_save_empty_records</strong></a>(self, repository)</dt><dd><span class="code">Test&nbsp;saving&nbsp;empty&nbsp;records&nbsp;list.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataRepository-test_save_records_to_csv"><strong>test_save_records_to_csv</strong></a>(self, repository, sample_records)</dt><dd><span class="code">Test&nbsp;saving&nbsp;records&nbsp;to&nbsp;CSV&nbsp;file.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="TestFarmDataService">class <strong>TestFarmDataService</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code">Test&nbsp;cases&nbsp;for&nbsp;the&nbsp;FarmDataService&nbsp;business&nbsp;layer.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="TestFarmDataService-csv_filename"><strong>csv_filename</strong></a>(self)</dt><dd><span class="code">CSV&nbsp;filename&nbsp;for&nbsp;testing.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-sample_record"><strong>sample_record</strong></a>(self)</dt><dd><span class="code">Create&nbsp;a&nbsp;sample&nbsp;record&nbsp;for&nbsp;testing.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-service"><strong>service</strong></a>(self)</dt><dd><span class="code">Create&nbsp;a&nbsp;FarmDataService&nbsp;instance&nbsp;for&nbsp;testing.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-test_add_record"><strong>test_add_record</strong></a>(self, service, sample_record)</dt><dd><span class="code">Test&nbsp;adding&nbsp;a&nbsp;record.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-test_delete_record"><strong>test_delete_record</strong></a>(self, service, sample_record)</dt><dd><span class="code">Test&nbsp;deleting&nbsp;a&nbsp;record.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-test_get_all_records"><strong>test_get_all_records</strong></a>(self, service, sample_record)</dt><dd><span class="code">Test&nbsp;getting&nbsp;all&nbsp;records.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-test_get_record_by_index"><strong>test_get_record_by_index</strong></a>(self, service, sample_record)</dt><dd><span class="code">Test&nbsp;retrieving&nbsp;record&nbsp;by&nbsp;index.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-test_get_records_by_range"><strong>test_get_records_by_range</strong></a>(self, service)</dt><dd><span class="code">Test&nbsp;getting&nbsp;records&nbsp;by&nbsp;range.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-test_initialization"><strong>test_initialization</strong></a>(self, service)</dt><dd><span class="code">Test&nbsp;service&nbsp;initialization.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-test_load_data_from_file"><strong>test_load_data_from_file</strong></a>(self, service, csv_filename)</dt><dd><span class="code">Test&nbsp;loading&nbsp;data&nbsp;through&nbsp;service.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-test_search_records"><strong>test_search_records</strong></a>(self, service)</dt><dd><span class="code">Test&nbsp;searching&nbsp;records.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataService-test_update_record"><strong>test_update_record</strong></a>(self, service, sample_record)</dt><dd><span class="code">Test&nbsp;updating&nbsp;a&nbsp;record.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="TestFarmDataUI">class <strong>TestFarmDataUI</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code">Test&nbsp;cases&nbsp;for&nbsp;the&nbsp;FarmDataUI&nbsp;presentation&nbsp;layer.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="TestFarmDataUI-test_initialization"><strong>test_initialization</strong></a>(self, ui)</dt><dd><span class="code">Test&nbsp;UI&nbsp;initialization.</span></dd></dl>
+
+<dl><dt><a name="TestFarmDataUI-ui"><strong>ui</strong></a>(self)</dt><dd><span class="code">Create&nbsp;a&nbsp;FarmDataUI&nbsp;instance&nbsp;for&nbsp;testing.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="TestIntegration">class <strong>TestIntegration</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code">Integration&nbsp;tests&nbsp;for&nbsp;the&nbsp;layered&nbsp;architecture.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="TestIntegration-test_end_to_end_workflow"><strong>test_end_to_end_workflow</strong></a>(self)</dt><dd><span class="code">Test&nbsp;complete&nbsp;workflow&nbsp;from&nbsp;UI&nbsp;to&nbsp;persistence.</span></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>

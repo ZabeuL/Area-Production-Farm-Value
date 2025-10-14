@@ -66,11 +66,6 @@ This project implements a three-layered architecture pattern:
 - Graceful handling of missing files or permissions
 - User-friendly error messages throughout
 
-### 👤 **Author Attribution**
-- "Lucas Zabeu" displayed prominently in all interfaces
-- Author name visible in headers, menus, and prompts
-- Consistent branding throughout the application
-
 ## Usage
 
 ### Running the Application
@@ -148,9 +143,8 @@ data/CST8333-Area, production  farm value (32100358).csv
 ## Requirements Met
 
 ✅ **Layered Design**: Presentation, Business, and Persistence layers implemented  
-✅ **File I/O on Startup**: Loads 100 records from CSV with exception handling  
-✅ **Author Display**: "Lucas Zabeu" prominently displayed throughout interface  
-✅ **Interactive Options**: All requested functionality implemented:
+✅ **File I/O on Startup**: Loads 100 records from CSV with exception handling   
+✅ **Interactive Options**: Features implemented:
   - ✅ Reload data from dataset
   - ✅ Persist data to new CSV file
   - ✅ Display single or multiple records
@@ -158,142 +152,71 @@ data/CST8333-Area, production  farm value (32100358).csv
   - ✅ Edit existing records
   - ✅ Delete records from memory
 
+## Testing
+
+### Test Structure
+The project includes comprehensive unit tests for all layers:
+
+- **Entity Tests**: `TestFarmDataRecord` - Tests data model functionality
+- **Persistence Tests**: `TestFarmDataRepository` - Tests file I/O operations
+- **Business Tests**: `TestFarmDataService` - Tests business logic and CRUD operations
+- **Presentation Tests**: `TestFarmDataUI` - Tests UI initialization
+- **Integration Tests**: `TestIntegration` - Tests end-to-end workflows
+
+### Running Tests
+```bash
+# Run all tests
+python -m pytest tests/test_farm_analyzer.py -v
+
+# Run specific test class
+python -m pytest tests/test_farm_analyzer.py::TestFarmDataService -v
+
+# Run specific test method
+python -m pytest tests/test_farm_analyzer.py::TestFarmDataRecord::test_accessors -v
+```
+
+### Test Coverage
+- ✅ Entity layer: Record creation, accessors, mutators, string representation, CSV conversion
+- ✅ Persistence layer: File loading, saving, error handling, constants
+- ✅ Business layer: CRUD operations, search, filtering, data management
+- ✅ Presentation layer: UI initialization and author attribution
+- ✅ Integration: End-to-end workflow testing
+
 ## Documentation
 
-Generated HTML documentation is available in the `docs/` folder:
-- Open `docs/index.html` in a web browser for module documentation
-- Documentation includes all layers and their components
+### Generated HTML Documentation
+The project includes comprehensive auto-generated documentation:
+
+- **Main Index**: `docs/index.html` - Clean, organized documentation index
+- **Module Documentation**: Individual HTML pages for each module
+- **Layered Organization**: Documentation is organized by architectural layers:
+  - 🔹 **Business Logic Layer**: Core application logic and data management
+  - 🔹 **Entity/Data Models**: Farm data record objects and models  
+  - 🔹 **Data Access Layer**: File I/O and persistence operations
+  - 🔹 **User Interface Layer**: Interactive user interface components
+  - 📦 **Test Modules**: Comprehensive unit and integration tests
+
+### Documentation Features
+- **Clean Design**: Professional styling with clear navigation
+- **Modular Organization**: Only actual modules (no package-level pages)
+- **Layer Descriptions**: Each architectural layer clearly identified
+- **Auto-Generated**: Uses pydoc for simplicity and reliability
+
+### Viewing Documentation
+```bash
+# Open the main documentation index
+start docs/index.html    # Windows
+open docs/index.html     # macOS  
+xdg-open docs/index.html # Linux
+```
+
+### Regenerating Documentation
+```bash
+python generate_docs.py
+```
 
 ## Author
 
 **Lucas Zabeu**  
 Programming Language Research Project  
-Algonquin College
-
-### 3. Data Structure
-- Stores parsed records in a Python list (array-like structure)
-- Initializes records with data from the first few CSV rows
-- Maintains data integrity and structure
-
-### 4. Display Functionality
-- Shows author name prominently (remains visible)
-- Loops through data structure to display record information
-- Formats output for readability
-
-## Programming Concepts Demonstrated
-
-1. **Variables**: Used throughout for data storage (csv_filename, records_processed, etc.)
-2. **Methods**: Multiple class methods including accessors, mutators, and utility functions
-3. **Loop Structure**: for loops for iterating through CSV data and displaying records
-4. **File-IO**: Reading from the CSV dataset using file operations
-5. **Exception Handling**: Comprehensive try-catch blocks for error management
-6. **API Library**: Usage of Python's csv module for data parsing
-7. **Array/Data Structure**: List containing FarmDataRecord objects
-
-## Dataset
-The application processes the file: `CST8333-Area, production  farm value (32100358).csv`
-
-This dataset contains the following columns:
-- REF_DATE: Reference date
-- GEO: Geographic location
-- DGUID: Geographic unique identifier
-- Area, production and farm value of potatoes: Measurement description
-- UOM: Unit of measurement
-- UOM_ID: Unit of measurement ID
-- SCALAR_FACTOR: Scalar factor
-- SCALAR_ID: Scalar ID
-- VECTOR: Vector identifier
-- COORDINATE: Coordinate value
-- VALUE: Actual data value
-- STATUS: Data status
-- SYMBOL: Symbol indicator
-- TERMINATED: Termination flag
-- DECIMALS: Number of decimal places
-
-## Usage
-
-To run the application:
-
-```bash
-python3 farm_data_analyzer.py
-```
-
-## Output Example
-
-```
-================================================================================
-FARM DATA ANALYZER APPLICATION
-Author: Your Full Name Here
-Dataset: CST8333-Area, production  farm value (32100358).csv
-================================================================================
-
-Successfully loaded 5 farm data records.
-
-Displaying 5 Farm Data Records:
-------------------------------------------------------------
-
-Record #1:
-  Year: 1908
-  Location: Canada
-  Measurement Type: Seeded area, potatoes
-  Value: 503600 Acres
-  Vector ID: v47140
-  Coordinate: 1.1
-
-Record #2:
-  Year: 1908
-  Location: Canada
-  Measurement Type: Average yield, potatoes
-  Value: 87.9 Hundredweight per harvested acres
-  Vector ID: v47151
-  Coordinate: 1.2
-
-[... additional records ...]
-
-------------------------------------------------------------
-Application completed successfully by Your Full Name Here
-```
-
-## Code Structure
-
-### FarmDataRecord Class
-- **Purpose**: Record object representing individual farm data entries
-- **Features**: Complete set of accessors and mutators, string representation
-- **Data**: Uses actual column names from CSV as attribute names
-
-### FarmDataAnalyzer Class
-- **Purpose**: Main application logic for data processing and display
-- **Features**: File I/O, exception handling, data display
-- **Methods**:
-  - `read_csv_data()`: Loads and parses CSV with exception handling
-  - `display_records()`: Loops through data structure and displays records
-  - `display_header()`: Shows application title and author name
-  - `run_application()`: Main application flow orchestration
-
-## Requirements Met
-
-✅ **Record Object**: FarmDataRecord uses CSV column names as attributes  
-✅ **File-IO**: Reads CSV dataset with exception handling  
-✅ **Data Structure**: Stores records in Python list  
-✅ **Loop Structure**: Iterates through records for display  
-✅ **Full Name Display**: Author name remains visible throughout  
-✅ **Documentation**: Comprehensive docstrings and comments  
-✅ **Programming Concepts**: All required concepts implemented  
-✅ **Exception Handling**: Multiple exception types handled  
-✅ **API Library**: csv module usage  
-✅ **Variables & Methods**: Extensive use throughout application  
-
-## Error Handling
-
-The application gracefully handles:
-- Missing CSV files
-- Permission errors
-- CSV parsing errors
-- General I/O exceptions
-
-Example error output:
-```
-Error: CSV file not found: CST8333-Area, production  farm value (32100358).csv
-Please ensure the CSV file exists in the correct location.
-Application failed to load data. Exiting...
-```
+Algonquin College @ CDI

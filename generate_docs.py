@@ -49,15 +49,15 @@ def find_modules(packages: List[str], project_root: str) -> Dict[str, str]:
                 if f.startswith('.'):
                     continue
 
+                # Skip __init__.py files - we only want actual modules, not packages
                 if f == '__init__.py':
-                    # document the package itself
-                    module_name = prefix or pkg
+                    continue
+                    
+                base = f[:-3]
+                if prefix:
+                    module_name = f"{prefix}.{base}"
                 else:
-                    base = f[:-3]
-                    if prefix:
-                        module_name = f"{prefix}.{base}"
-                    else:
-                        module_name = f"{pkg}.{base}"
+                    module_name = f"{pkg}.{base}"
 
                 modules[module_name] = os.path.join(root, f)
 
@@ -154,14 +154,33 @@ def generate_docs(packages: List[str] = None) -> None:
     # Build an index.html in docs/ linking to generated module pages
     try:
         index_path = os.path.join(docs_dir, 'index.html')
-        grouped: Dict[str, List[Tuple[str, bool]]] = {}
-        # successes: modules successfully documented
+        grouped: Dict[str, Dict[str, List[Tuple[str, bool]]]] = {}
         success_set = set(successes)
-        failure_set = {f[0] for f in failures}
 
+        # Group modules by package hierarchy
         for mod in modules:
-            top = mod.split('.')[0]
-            grouped.setdefault(top, []).append((mod, mod in success_set))
+            parts = mod.split('.')
+            top_package = parts[0]  # e.g., 'src' or 'tests'
+            
+            if len(parts) == 2:
+                # Direct module in top package (e.g., 'src.farm_data_analyzer')
+                sub_package = 'main'
+                module_name = parts[1]
+            elif len(parts) == 3:
+                # Module in sub-package (e.g., 'src.business.farm_data_service')
+                sub_package = parts[1]
+                module_name = parts[2]
+            else:
+                # Handle deeper nesting if needed
+                sub_package = '.'.join(parts[1:-1])
+                module_name = parts[-1]
+            
+            if top_package not in grouped:
+                grouped[top_package] = {}
+            if sub_package not in grouped[top_package]:
+                grouped[top_package][sub_package] = []
+                
+            grouped[top_package][sub_package].append((mod, mod in success_set))
 
         lines = [
             '<!doctype html>',
@@ -169,27 +188,98 @@ def generate_docs(packages: List[str] = None) -> None:
             '<head>',
             '  <meta charset="utf-8">',
             '  <meta name="viewport" content="width=device-width, initial-scale=1">',
-            f'  <title>Project documentation index</title>',
-            '  <style> body{font-family:Segoe UI,Arial,Helvetica,sans-serif;padding:20px} h1{font-size:1.5rem} ul{line-height:1.6} .skipped{color:#c00} </style>',
+            f'  <title>Farm Data Analyzer - Documentation Index</title>',
+            '  <style>',
+            '    body { font-family: Segoe UI, Arial, Helvetica, sans-serif; padding: 20px; max-width: 1200px; margin: 0 auto; }',
+            '    h1 { font-size: 2rem; color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }',
+            '    h2 { font-size: 1.5rem; color: #34495e; margin-top: 30px; }',
+            '    h3 { font-size: 1.2rem; color: #7f8c8d; margin-top: 20px; margin-bottom: 10px; }',
+            '    ul { line-height: 1.8; }',
+            '    li { margin-bottom: 5px; }',
+            '    a { color: #3498db; text-decoration: none; }',
+            '    a:hover { text-decoration: underline; }',
+            '    .skipped { color: #e74c3c; font-style: italic; }',
+            '    .summary { background: #ecf0f1; padding: 15px; border-radius: 5px; margin-bottom: 20px; }',
+            '    .package-section { margin-bottom: 30px; }',
+            '  </style>',
             '</head>',
             '<body>',
-            '  <h1>Documentation index</h1>',
-            f'  <p>Generated modules: {len(successes)} — Skipped/failed: {len(failures)}</p>',
+            '  <h1>Farm Data Analyzer - Documentation Index</h1>',
+            '  <div class="summary">',
+            f'    <strong>Documentation Summary:</strong> {len(successes)} modules documented',
+            f'    {f" — {len(failures)} skipped/failed" if failures else ""}',
+            '    <br><strong>Author:</strong> Lucas Zabeu',
+            '  </div>',
         ]
 
-        for top in sorted(grouped.keys()):
-            lines.append(f'  <h2>{top}</h2>')
-            lines.append('  <ul>')
-            for mod, ok in sorted(grouped[top]):
-                # pydoc creates filenames like module.name.html (dots become dots)
-                filename = f"{mod}.html"
-                if ok:
-                    lines.append(f'    <li><a href="{filename}">{mod}</a></li>')
+        for top_package in sorted(grouped.keys()):
+            lines.append(f'  <div class="package-section">')
+            
+            # Package title with description
+            package_titles = {
+                'src': 'Source Code Modules',
+                'tests': 'Test Modules'
+            }
+            title = package_titles.get(top_package, f'{top_package.title()} Package')
+            lines.append(f'    <h2>📦 {title}</h2>')
+            
+            # Group modules by sub-package
+            sub_packages = grouped[top_package]
+            
+            for sub_package in sorted(sub_packages.keys()):
+                modules_in_sub = sub_packages[sub_package]
+                
+                if sub_package == 'main':
+                    # Direct modules in top package
+                    if len(modules_in_sub) > 0:
+                        lines.append('    <ul>')
+                        for mod, ok in sorted(modules_in_sub):
+                            filename = f"{mod}.html"
+                            module_display_name = mod.split('.')[-1]  # Just the module name
+                            if ok:
+                                lines.append(f'      <li>📄 <a href="{filename}">{module_display_name}</a> <small>({mod})</small></li>')
+                            else:
+                                lines.append(f'      <li class="skipped">📄 {module_display_name} (skipped) <small>({mod})</small></li>')
+                        lines.append('    </ul>')
                 else:
-                    lines.append(f'    <li class="skipped">{mod} (skipped)</li>')
-            lines.append('  </ul>')
+                    # Modules in sub-packages
+                    sub_package_titles = {
+                        'business': 'Business Logic Layer',
+                        'entities': 'Entity/Data Models',
+                        'persistence': 'Data Access Layer',
+                        'presentation': 'User Interface Layer'
+                    }
+                    sub_title = sub_package_titles.get(sub_package, f'{sub_package.title()} Package')
+                    lines.append(f'    <h3>🔹 {sub_title}</h3>')
+                    lines.append('    <ul>')
+                    
+                    for mod, ok in sorted(modules_in_sub):
+                        filename = f"{mod}.html"
+                        module_display_name = mod.split('.')[-1]  # Just the module name
+                        if ok:
+                            lines.append(f'      <li>📄 <a href="{filename}">{module_display_name}</a> <small>({mod})</small></li>')
+                        else:
+                            lines.append(f'      <li class="skipped">📄 {module_display_name} (skipped) <small>({mod})</small></li>')
+                    
+                    lines.append('    </ul>')
+            
+            lines.append('  </div>')
 
-        lines.extend(['</body>', '</html>'])
+        if failures:
+            lines.append('  <div class="package-section">')
+            lines.append('    <h2>⚠️ Skipped Modules</h2>')
+            lines.append('    <ul>')
+            for mod, reason in failures:
+                lines.append(f'      <li class="skipped">{mod}: {reason}</li>')
+            lines.append('    </ul>')
+            lines.append('  </div>')
+
+        lines.extend([
+            '  <hr>',
+            '  <p><small>Generated by pydoc documentation generator | Author: Lucas Zabeu</small></p>',
+            '</body>', 
+            '</html>'
+        ])
 
         with open(index_path, 'w', encoding='utf-8') as fh:
             fh.write('\n'.join(lines))
