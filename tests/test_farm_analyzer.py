@@ -290,6 +290,77 @@ class TestFarmDataService:
         
         assert len(all_records) == 1
         assert all_records[0].geo == "Test Location"
+    
+    def test_sort_records_by_geo(self, service):
+        """Test sorting records by geographic location."""
+        # Add records in random order
+        service.add_record(FarmDataRecord(geo="Zebra Province", value="100"))
+        service.add_record(FarmDataRecord(geo="Alpha Province", value="200"))
+        service.add_record(FarmDataRecord(geo="Beta Province", value="300"))
+        
+        # Sort by geo ascending
+        success = service.sort_records('geo', ascending=True)
+        assert success == True
+        
+        # Verify order
+        all_records = service.get_all_records()
+        assert all_records[0].geo == "Alpha Province"
+        assert all_records[1].geo == "Beta Province"
+        assert all_records[2].geo == "Zebra Province"
+    
+    def test_sort_records_by_value_descending(self, service):
+        """Test sorting records by numeric value in descending order."""
+        # Add records with numeric values
+        service.add_record(FarmDataRecord(geo="Location A", value="100"))
+        service.add_record(FarmDataRecord(geo="Location B", value="500"))
+        service.add_record(FarmDataRecord(geo="Location C", value="250"))
+        
+        # Sort by value descending
+        success = service.sort_records('value', ascending=False)
+        assert success == True
+        
+        # Verify order (highest first)
+        all_records = service.get_all_records()
+        assert all_records[0].value == "500"
+        assert all_records[1].value == "250"
+        assert all_records[2].value == "100"
+    
+    def test_sort_records_invalid_field(self, service, sample_record):
+        """Test sorting with invalid field name."""
+        service.add_record(sample_record)
+        success = service.sort_records('invalid_field')
+        assert success == False
+    
+    def test_get_top_n_records(self, service):
+        """Test getting top N records."""
+        # Add records
+        for i in range(10):
+            service.add_record(FarmDataRecord(geo=f"Location {i}", value=str(i * 100)))
+        
+        # Get top 3 by value
+        top_records = service.get_top_n_records(3, 'value', ascending=False)
+        
+        assert len(top_records) == 3
+        assert top_records[0].value == "900"
+        assert top_records[1].value == "800"
+        assert top_records[2].value == "700"
+    
+    def test_get_unique_values(self, service):
+        """Test getting unique values using set data structure."""
+        # Add records with some duplicate locations
+        service.add_record(FarmDataRecord(geo="Ontario", value="100"))
+        service.add_record(FarmDataRecord(geo="Quebec", value="200"))
+        service.add_record(FarmDataRecord(geo="Ontario", value="300"))
+        service.add_record(FarmDataRecord(geo="Alberta", value="400"))
+        
+        # Get unique locations
+        unique_geos = service.get_unique_values('geo')
+        
+        assert isinstance(unique_geos, set)
+        assert len(unique_geos) == 3
+        assert "Ontario" in unique_geos
+        assert "Quebec" in unique_geos
+        assert "Alberta" in unique_geos
 
 
 class TestFarmDataUI:

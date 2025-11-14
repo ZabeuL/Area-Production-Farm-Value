@@ -10,7 +10,8 @@ Classes:
 Author: Lucas Zabeu
 """
 
-from typing import List, Optional
+from typing import List, Optional, Callable
+from operator import attrgetter
 from ..entities.farm_data_record import FarmDataRecord
 from ..persistence.farm_data_repository import FarmDataRepository
 
@@ -185,3 +186,157 @@ class FarmDataService:
                 results.append((index, self._farm_records[index]))
                 
         return results
+    
+    def sort_records(self, sort_by: str, ascending: bool = True) -> bool:
+        """
+        Sort records in-memory by a specified field using Python's Timsort algorithm.
+        
+        This method uses Python's built-in sorted() function which implements Timsort,
+        a hybrid sorting algorithm with O(n log n) complexity. Sorting is stable,
+        meaning records with equal keys maintain their relative order.
+        
+        Args:
+            sort_by: Field name to sort by. Valid options:
+                - 'ref_date': Reference date/year
+                - 'geo': Geographic location
+                - 'area_production_farm_value': Type of measurement
+                - 'value': Data value (numeric)
+                - 'uom': Unit of measurement
+                - 'vector': Vector identifier
+            ascending: Sort order (True for ascending, False for descending)
+            
+        Returns:
+            True if sorting was successful, False if invalid field name.
+            
+        Implementation Notes:
+            - Uses operator.attrgetter for efficient attribute access
+            - Handles numeric conversion for 'value' field with fallback to 0
+            - Maintains stable sort with secondary key (ref_date) for deterministic results
+            - Modifies the in-memory list in-place for efficiency
+        """
+        # Define valid sortable fields
+        valid_fields = {
+            'ref_date', 'geo', 'area_production_farm_value', 
+            'value', 'uom', 'vector', 'coordinate'
+        }
+        
+        if sort_by not in valid_fields:
+            return False
+        
+        try:
+            # Special handling for numeric fields
+            if sort_by == 'value':
+                # Sort by numeric value with fallback for non-numeric entries
+                # Secondary sort by ref_date for stable, deterministic results
+                self._farm_records = sorted(
+                    self._farm_records,
+                    key=lambda record: (
+                        self._safe_numeric_convert(record.value),
+                        record.ref_date
+                    ),
+                    reverse=not ascending
+                )
+            elif sort_by == 'coordinate':
+                # Sort by coordinate (also numeric)
+                self._farm_records = sorted(
+                    self._farm_records,
+                    key=lambda record: (
+                        self._safe_numeric_convert(record.coordinate),
+                        record.ref_date
+                    ),
+                    reverse=not ascending
+                )
+            else:
+                # Sort by string fields using attrgetter for efficiency
+                # Secondary sort by ref_date for deterministic ties
+                self._farm_records = sorted(
+                    self._farm_records,
+                    key=lambda record: (
+                        getattr(record, sort_by).lower(),  # Case-insensitive string sort
+                        record.ref_date
+                    ),
+                    reverse=not ascending
+                )
+            
+            return True
+            
+        except Exception as e:
+            print(f"Error during sorting: {e}")
+            return False
+    
+    def _safe_numeric_convert(self, value: str) -> float:
+        """
+        Safely convert string value to float for numeric sorting.
+        
+        Args:
+            value: String value to convert
+            
+        Returns:
+            Float representation of value, or 0.0 if conversion fails
+        """
+        try:
+            # Remove any whitespace and convert
+            return float(value.strip()) if value.strip() else 0.0
+        except (ValueError, AttributeError):
+            # Return 0 for invalid numeric values
+            return 0.0
+    
+    def get_top_n_records(self, n: int, sort_by: str = 'value', ascending: bool = False) -> List[FarmDataRecord]:
+        """
+        Get the top N records sorted by a specified field.
+        
+        This is useful for analytical queries like "top 10 by farm value" without
+        modifying the main data structure.
+        
+        Args:
+            n: Number of records to return
+            sort_by: Field to sort by (default: 'value')
+            ascending: Sort order (default: False for top values first)
+            
+        Returns:
+            List of top N records
+        """
+        # Create a copy to avoid modifying original order
+        temp_records = self._farm_records.copy()
+        
+        # Sort the copy
+        if sort_by == 'value':
+            temp_records = sorted(
+                temp_records,
+                key=lambda record: self._safe_numeric_convert(record.value),
+                reverse=not ascending
+            )
+        else:
+            temp_records = sorted(
+                temp_records,
+                key=attrgetter(sort_by),
+                reverse=not ascending
+            )
+        
+        # Return top N
+        return temp_records[:min(n, len(temp_records))]
+    
+    def get_unique_values(self, field: str) -> set:
+        """
+        Get unique values for a specified field using a set data structure.
+        
+        This demonstrates use of a set container for fast duplicate detection
+        and can be used for data hygiene checks or filtering options.
+        
+        Args:
+            field: Field name to extract unique values from
+            
+        Returns:
+            Set of unique values for the field
+        """
+        unique_values = set()
+        
+        for record in self._farm_records:
+            try:
+                value = getattr(record, field)
+                if value:  # Only add non-empty values
+                    unique_values.add(value)
+            except AttributeError:
+                continue
+                
+        return unique_values

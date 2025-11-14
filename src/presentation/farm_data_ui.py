@@ -58,7 +58,9 @@ class FarmDataUI:
         print("6. Edit existing record")
         print("7. Delete record")
         print("8. Search records")
-        print("9. Exit application")
+        print("9. Sort records (Data Structures & Algorithms)")
+        print("10. View top N records")
+        print("11. Exit application")
         print("-" * 50)
     
     def get_user_choice(self) -> str:
@@ -69,10 +71,10 @@ class FarmDataUI:
             User's menu choice as a string.
         """
         while True:
-            choice = input(f"Enter your choice (1-9) [{self._author_name}]: ").strip()
-            if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
+            choice = input(f"Enter your choice (1-11) [{self._author_name}]: ").strip()
+            if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']:
                 return choice
-            print("Invalid choice. Please enter a number between 1 and 9.")
+            print("Invalid choice. Please enter a number between 1 and 11.")
     
     def handle_load_data(self) -> None:
         """Handle loading/reloading data from a CSV file."""
@@ -378,6 +380,124 @@ class FarmDataUI:
         else:
             print(f"No records found matching '{search_term}'")
     
+    def handle_sort_records(self) -> None:
+        """Handle sorting records using data structures and algorithms."""
+        print(f"\n--- Sort Records - Data Structures & Algorithms (by {self._author_name}) ---")
+        
+        if self._service.record_count == 0:
+            print("No data in memory. Please load data first.")
+            return
+        
+        print("\nThis feature uses Python's Timsort algorithm (O(n log n) complexity)")
+        print("to sort records in-memory by any field. Sorting is stable, meaning")
+        print("records with equal keys maintain their relative order.\n")
+        
+        print("Available fields to sort by:")
+        print("  1. ref_date          - Reference date/year")
+        print("  2. geo               - Geographic location")
+        print("  3. area_production_farm_value - Type of measurement")
+        print("  4. value             - Data value (numeric)")
+        print("  5. uom               - Unit of measurement")
+        print("  6. vector            - Vector identifier")
+        print("  7. coordinate        - Coordinate value (numeric)")
+        
+        # Map user choice to field name
+        field_map = {
+            '1': 'ref_date',
+            '2': 'geo',
+            '3': 'area_production_farm_value',
+            '4': 'value',
+            '5': 'uom',
+            '6': 'vector',
+            '7': 'coordinate'
+        }
+        
+        choice = input("\nEnter field number to sort by (1-7): ").strip()
+        
+        if choice not in field_map:
+            print("Invalid choice.")
+            return
+        
+        sort_field = field_map[choice]
+        
+        # Get sort order
+        order = input("Sort order - (A)scending or (D)escending? [A]: ").strip().upper()
+        ascending = order != 'D'
+        
+        print(f"\nSorting records by '{sort_field}' in {'ascending' if ascending else 'descending'} order...")
+        
+        if self._service.sort_records(sort_field, ascending):
+            print(f"Successfully sorted {self._service.record_count} records!")
+            print(f"Order: {'Ascending' if ascending else 'Descending'}")
+            
+            # Show first few records as confirmation
+            show_preview = input("\nDisplay first 5 records to confirm? (y/N): ").strip().lower()
+            if show_preview == 'y' or show_preview == 'yes':
+                records = self._service.get_records_by_range(0, 4)
+                print("\nFirst 5 records after sorting:")
+                print("-" * 60)
+                for index, record in records:
+                    print(f"\nRecord #{index}:")
+                    print(record)
+        else:
+            print("Failed to sort records. Please try again.")
+    
+    def handle_top_n_records(self) -> None:
+        """Handle displaying top N records by a specified field."""
+        print(f"\n--- Top N Records (by {self._author_name}) ---")
+        
+        if self._service.record_count == 0:
+            print("No data in memory. Please load data first.")
+            return
+        
+        print("\nThis feature provides analytical queries like 'top 10 by farm value'")
+        print("without modifying the main data structure order.\n")
+        
+        try:
+            n = int(input(f"How many top records to display? (1-{self._service.record_count}): "))
+            
+            if n <= 0 or n > self._service.record_count:
+                print(f"Please enter a number between 1 and {self._service.record_count}")
+                return
+            
+            print("\nSort by:")
+            print("  1. value      - Data value (most common)")
+            print("  2. ref_date   - Reference date")
+            print("  3. geo        - Geographic location")
+            
+            sort_choice = input("Enter choice (1-3) [1]: ").strip() or '1'
+            
+            sort_map = {'1': 'value', '2': 'ref_date', '3': 'geo'}
+            sort_field = sort_map.get(sort_choice, 'value')
+            
+            # For numeric fields, default to descending (top values first)
+            # For text fields, default to ascending
+            default_desc = sort_field == 'value'
+            
+            order = input(f"Sort order - (A)scending or (D)escending? [{'D' if default_desc else 'A'}]: ").strip().upper()
+            
+            if not order:
+                ascending = not default_desc
+            else:
+                ascending = order != 'D'
+            
+            print(f"\nGetting top {n} records sorted by '{sort_field}'...")
+            
+            top_records = self._service.get_top_n_records(n, sort_field, ascending)
+            
+            if top_records:
+                print(f"\nTop {len(top_records)} records by {sort_field} ({'ascending' if ascending else 'descending'}):")
+                print("=" * 60)
+                
+                for index, record in enumerate(top_records, 1):
+                    print(f"\n#{index}:")
+                    print(record)
+            else:
+                print("No records found.")
+                
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+    
     def run_application(self) -> None:
         """
         Main method to run the interactive application.
@@ -413,6 +533,10 @@ class FarmDataUI:
             elif choice == '8':
                 self.handle_search_records()
             elif choice == '9':
+                self.handle_sort_records()
+            elif choice == '10':
+                self.handle_top_n_records()
+            elif choice == '11':
                 print(f"\nThank you for using the Farm Data Analyzer!")
                 print(f"Application completed by {self._author_name}")
                 sys.exit(0)

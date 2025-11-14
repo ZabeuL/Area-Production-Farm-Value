@@ -84,6 +84,30 @@ Args:<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;tuples&nbsp;containing&nbsp;(index,&nbsp;record)&nbsp;for&nbsp;records&nbsp;in&nbsp;the&nbsp;range.</span></dd></dl>
 
+<dl><dt><a name="FarmDataService-get_top_n_records"><strong>get_top_n_records</strong></a>(self, n: int, sort_by: str = 'value', ascending: bool = False) -&gt; List[src.entities.farm_data_record.FarmDataRecord]</dt><dd><span class="code">Get&nbsp;the&nbsp;top&nbsp;N&nbsp;records&nbsp;sorted&nbsp;by&nbsp;a&nbsp;specified&nbsp;field.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;useful&nbsp;for&nbsp;analytical&nbsp;queries&nbsp;like&nbsp;"top&nbsp;10&nbsp;by&nbsp;farm&nbsp;value"&nbsp;without<br>
+modifying&nbsp;the&nbsp;main&nbsp;data&nbsp;structure.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;n:&nbsp;Number&nbsp;of&nbsp;records&nbsp;to&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sort_by:&nbsp;Field&nbsp;to&nbsp;sort&nbsp;by&nbsp;(default:&nbsp;'value')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ascending:&nbsp;Sort&nbsp;order&nbsp;(default:&nbsp;False&nbsp;for&nbsp;top&nbsp;values&nbsp;first)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;top&nbsp;N&nbsp;records</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-get_unique_values"><strong>get_unique_values</strong></a>(self, field: str) -&gt; set</dt><dd><span class="code">Get&nbsp;unique&nbsp;values&nbsp;for&nbsp;a&nbsp;specified&nbsp;field&nbsp;using&nbsp;a&nbsp;set&nbsp;data&nbsp;structure.<br>
+&nbsp;<br>
+This&nbsp;demonstrates&nbsp;use&nbsp;of&nbsp;a&nbsp;set&nbsp;container&nbsp;for&nbsp;fast&nbsp;duplicate&nbsp;detection<br>
+and&nbsp;can&nbsp;be&nbsp;used&nbsp;for&nbsp;data&nbsp;hygiene&nbsp;checks&nbsp;or&nbsp;filtering&nbsp;options.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;field:&nbsp;Field&nbsp;name&nbsp;to&nbsp;extract&nbsp;unique&nbsp;values&nbsp;from<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;of&nbsp;unique&nbsp;values&nbsp;for&nbsp;the&nbsp;field</span></dd></dl>
+
 <dl><dt><a name="FarmDataService-load_data_from_file"><strong>load_data_from_file</strong></a>(self, csv_filename: str, max_records: int = 100) -&gt; bool</dt><dd><span class="code">Load&nbsp;farm&nbsp;data&nbsp;from&nbsp;a&nbsp;CSV&nbsp;file&nbsp;into&nbsp;memory.<br>
 &nbsp;<br>
 Args:<br>
@@ -108,6 +132,31 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;tuples&nbsp;containing&nbsp;(index,&nbsp;record)&nbsp;for&nbsp;matching&nbsp;records.</span></dd></dl>
+
+<dl><dt><a name="FarmDataService-sort_records"><strong>sort_records</strong></a>(self, sort_by: str, ascending: bool = True) -&gt; bool</dt><dd><span class="code">Sort&nbsp;records&nbsp;in-memory&nbsp;by&nbsp;a&nbsp;specified&nbsp;field&nbsp;using&nbsp;Python's&nbsp;Timsort&nbsp;algorithm.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;uses&nbsp;Python's&nbsp;built-in&nbsp;sorted()&nbsp;function&nbsp;which&nbsp;implements&nbsp;Timsort,<br>
+a&nbsp;hybrid&nbsp;sorting&nbsp;algorithm&nbsp;with&nbsp;O(n&nbsp;log&nbsp;n)&nbsp;complexity.&nbsp;Sorting&nbsp;is&nbsp;stable,<br>
+meaning&nbsp;records&nbsp;with&nbsp;equal&nbsp;keys&nbsp;maintain&nbsp;their&nbsp;relative&nbsp;order.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sort_by:&nbsp;Field&nbsp;name&nbsp;to&nbsp;sort&nbsp;by.&nbsp;Valid&nbsp;options:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'ref_date':&nbsp;Reference&nbsp;date/year<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'geo':&nbsp;Geographic&nbsp;location<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'area_production_farm_value':&nbsp;Type&nbsp;of&nbsp;measurement<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'value':&nbsp;Data&nbsp;value&nbsp;(numeric)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'uom':&nbsp;Unit&nbsp;of&nbsp;measurement<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'vector':&nbsp;Vector&nbsp;identifier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ascending:&nbsp;Sort&nbsp;order&nbsp;(True&nbsp;for&nbsp;ascending,&nbsp;False&nbsp;for&nbsp;descending)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;if&nbsp;sorting&nbsp;was&nbsp;successful,&nbsp;False&nbsp;if&nbsp;invalid&nbsp;field&nbsp;name.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Implementation&nbsp;Notes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Uses&nbsp;operator.attrgetter&nbsp;for&nbsp;efficient&nbsp;attribute&nbsp;access<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Handles&nbsp;numeric&nbsp;conversion&nbsp;for&nbsp;'value'&nbsp;field&nbsp;with&nbsp;fallback&nbsp;to&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Maintains&nbsp;stable&nbsp;sort&nbsp;with&nbsp;secondary&nbsp;key&nbsp;(ref_date)&nbsp;for&nbsp;deterministic&nbsp;results<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Modifies&nbsp;the&nbsp;in-memory&nbsp;list&nbsp;in-place&nbsp;for&nbsp;efficiency</span></dd></dl>
 
 <dl><dt><a name="FarmDataService-update_record"><strong>update_record</strong></a>(
     self,
@@ -144,6 +193,7 @@ Data descriptors defined here:<br>
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
     
 <tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
-<td class="singlecolumn"><strong>List</strong> = typing.List<br>
+<td class="singlecolumn"><strong>Callable</strong> = typing.Callable<br>
+<strong>List</strong> = typing.List<br>
 <strong>Optional</strong> = typing.Optional</td></tr></table>
 </body></html>
