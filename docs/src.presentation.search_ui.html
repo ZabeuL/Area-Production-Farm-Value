@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module src.presentation.search_ui</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="src.html" class="white">src</a>.<a href="src.presentation.html" class="white">presentation</a>.search_ui</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Clucas%5Conedrive%5Ccollege%5Calgonquin%5Cterm%204%5Cprogramming%20language%20research%20project%5Careaproductionfarmvalue%5Carea-production-farm-value%5Csrc%5Cpresentation%5Csearch_ui.py">c:\users\lucas\onedrive\college\algonquin\term 4\programming language research project\areaproductionfarmvalue\area-production-farm-value\src\presentation\search_ui.py</a></td></tr></table>
+    <p><span class="code">search_ui.py<br>
+&nbsp;<br>
+Presentation&nbsp;layer&nbsp;for&nbsp;interactive&nbsp;search&nbsp;interface&nbsp;using&nbsp;rich&nbsp;library.<br>
+Provides&nbsp;beautiful&nbsp;console-based&nbsp;interactive&nbsp;search&nbsp;with&nbsp;multiple&nbsp;operators,<br>
+boolean&nbsp;logic,&nbsp;and&nbsp;result&nbsp;visualization.<br>
+&nbsp;<br>
+Classes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SearchUI">SearchUI</a>:&nbsp;Interactive&nbsp;user&nbsp;interface&nbsp;for&nbsp;advanced&nbsp;search&nbsp;functionality.<br>
+&nbsp;<br>
+Author:&nbsp;Lucas&nbsp;Zabeu</span></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="rich.box.html">rich.box</a><br>
+</td><td class="multicolumn"><a href="os.html">os</a><br>
+</td><td class="multicolumn"><a href="sys.html">sys</a><br>
+</td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="src.presentation.search_ui.html#SearchUI">SearchUI</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="SearchUI">class <strong>SearchUI</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#SearchUI">SearchUI</a>(service:&nbsp;src.business.farm_data_service.FarmDataService)<br>
+&nbsp;<br>
+Interactive&nbsp;user&nbsp;interface&nbsp;for&nbsp;advanced&nbsp;search&nbsp;functionality.<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;provides&nbsp;a&nbsp;rich&nbsp;console-based&nbsp;interface&nbsp;for:<br>
+-&nbsp;Multi-column&nbsp;filtering&nbsp;with&nbsp;various&nbsp;operators<br>
+-&nbsp;Boolean&nbsp;logic&nbsp;(AND/OR)&nbsp;for&nbsp;combining&nbsp;conditions<br>
+-&nbsp;Interactive&nbsp;result&nbsp;display&nbsp;with&nbsp;customization<br>
+-&nbsp;CSV&nbsp;export&nbsp;and&nbsp;summary&nbsp;statistics<br>
+-&nbsp;Search&nbsp;refinement&nbsp;on&nbsp;previous&nbsp;results<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="SearchUI-__init__"><strong>__init__</strong></a>(self, service: src.business.farm_data_service.FarmDataService)</dt><dd><span class="code">Initialize&nbsp;search&nbsp;UI&nbsp;with&nbsp;a&nbsp;data&nbsp;service.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;service:&nbsp;FarmDataService&nbsp;instance&nbsp;containing&nbsp;farm&nbsp;records</span></dd></dl>
+
+<dl><dt><a name="SearchUI-display_available_columns"><strong>display_available_columns</strong></a>(self) -&gt; None</dt><dd><span class="code">Display&nbsp;available&nbsp;columns&nbsp;in&nbsp;a&nbsp;formatted&nbsp;table.</span></dd></dl>
+
+<dl><dt><a name="SearchUI-display_operator_help"><strong>display_operator_help</strong></a>(self) -&gt; None</dt><dd><span class="code">Display&nbsp;available&nbsp;operators&nbsp;and&nbsp;their&nbsp;usage.</span></dd></dl>
+
+<dl><dt><a name="SearchUI-display_post_search_options"><strong>display_post_search_options</strong></a>(self, results) -&gt; None</dt><dd><span class="code">Display&nbsp;options&nbsp;for&nbsp;working&nbsp;with&nbsp;search&nbsp;results.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results:&nbsp;pandas&nbsp;DataFrame&nbsp;with&nbsp;search&nbsp;results</span></dd></dl>
+
+<dl><dt><a name="SearchUI-display_results"><strong>display_results</strong></a>(self, results, limit: Optional[int] = None) -&gt; None</dt><dd><span class="code">Display&nbsp;search&nbsp;results&nbsp;in&nbsp;a&nbsp;formatted&nbsp;table.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results:&nbsp;pandas&nbsp;DataFrame&nbsp;with&nbsp;search&nbsp;results<br>
+&nbsp;&nbsp;&nbsp;&nbsp;limit:&nbsp;Maximum&nbsp;number&nbsp;of&nbsp;rows&nbsp;to&nbsp;display</span></dd></dl>
+
+<dl><dt><a name="SearchUI-display_search_header"><strong>display_search_header</strong></a>(self) -&gt; None</dt><dd><span class="code">Display&nbsp;the&nbsp;search&nbsp;interface&nbsp;header.</span></dd></dl>
+
+<dl><dt><a name="SearchUI-display_summary_statistics"><strong>display_summary_statistics</strong></a>(self, stats: Dict[str, Any]) -&gt; None</dt><dd><span class="code">Display&nbsp;summary&nbsp;statistics&nbsp;in&nbsp;a&nbsp;formatted&nbsp;panel.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stats:&nbsp;Dictionary&nbsp;containing&nbsp;summary&nbsp;statistics</span></dd></dl>
+
+<dl><dt><a name="SearchUI-get_search_condition"><strong>get_search_condition</strong></a>(self) -&gt; Optional[src.business.search_engine.SearchCondition]</dt><dd><span class="code">Interactively&nbsp;get&nbsp;a&nbsp;search&nbsp;condition&nbsp;from&nbsp;the&nbsp;user.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SearchCondition&nbsp;<a href="builtins.html#object">object</a>&nbsp;or&nbsp;None&nbsp;if&nbsp;user&nbsp;cancels</span></dd></dl>
+
+<dl><dt><a name="SearchUI-handle_export_csv"><strong>handle_export_csv</strong></a>(self, results) -&gt; None</dt><dd><span class="code">Handle&nbsp;CSV&nbsp;export&nbsp;of&nbsp;search&nbsp;results.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results:&nbsp;pandas&nbsp;DataFrame&nbsp;to&nbsp;export</span></dd></dl>
+
+<dl><dt><a name="SearchUI-handle_search_interactive"><strong>handle_search_interactive</strong></a>(self) -&gt; None</dt><dd><span class="code">Main&nbsp;interactive&nbsp;search&nbsp;handler.</span></dd></dl>
+
+<dl><dt><a name="SearchUI-handle_unique_values"><strong>handle_unique_values</strong></a>(self, results) -&gt; None</dt><dd><span class="code">Display&nbsp;unique&nbsp;values&nbsp;for&nbsp;a&nbsp;selected&nbsp;column.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results:&nbsp;pandas&nbsp;DataFrame&nbsp;to&nbsp;analyze</span></dd></dl>
+
+<dl><dt><a name="SearchUI-initialize_search_engine"><strong>initialize_search_engine</strong></a>(self) -&gt; bool</dt><dd><span class="code">Initialize&nbsp;the&nbsp;search&nbsp;engine&nbsp;with&nbsp;current&nbsp;records&nbsp;from&nbsp;service.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;if&nbsp;initialization&nbsp;successful,&nbsp;False&nbsp;otherwise</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>Dict</strong> = typing.Dict<br>
+<strong>List</strong> = typing.List<br>
+<strong>Optional</strong> = typing.Optional</td></tr></table>
+</body></html>

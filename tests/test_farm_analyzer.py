@@ -19,6 +19,7 @@ import tempfile
 from src.entities.farm_data_record import FarmDataRecord
 from src.persistence.farm_data_repository import FarmDataRepository
 from src.business.farm_data_service import FarmDataService
+from src.business.search_engine import SearchEngine, SearchCondition, ComparisonOperator, BooleanOperator
 from src.presentation.farm_data_ui import FarmDataUI
 
 
@@ -412,6 +413,231 @@ class TestIntegration:
             success = service.save_data_to_file(temp_filename)
             assert success == True
             assert os.path.exists(temp_filename)
+        finally:
+            if os.path.exists(temp_filename):
+                os.unlink(temp_filename)
+
+
+class TestSearchEngine:
+    """Test cases for the SearchEngine class."""
+    
+    @pytest.fixture
+    def sample_records(self):
+        """Create sample records for search testing."""
+        records = [
+            FarmDataRecord(
+                ref_date="2020", geo="Canada", dguid="123", 
+                area_production_farm_value="Wheat", uom="Bushels", uom_id="1",
+                scalar_factor="thousands", scalar_id="3", vector="v001",
+                coordinate="1.1", value="1000", status="", symbol="", 
+                terminated="", decimals="0"
+            ),
+            FarmDataRecord(
+                ref_date="2020", geo="Ontario", dguid="124",
+                area_production_farm_value="Corn", uom="Bushels", uom_id="1",
+                scalar_factor="thousands", scalar_id="3", vector="v002",
+                coordinate="1.2", value="2000", status="", symbol="",
+                terminated="", decimals="0"
+            ),
+            FarmDataRecord(
+                ref_date="2021", geo="Quebec", dguid="125",
+                area_production_farm_value="Barley", uom="Bushels", uom_id="1",
+                scalar_factor="thousands", scalar_id="3", vector="v003",
+                coordinate="1.3", value="1500", status="", symbol="",
+                terminated="", decimals="0"
+            ),
+            FarmDataRecord(
+                ref_date="2021", geo="Alberta", dguid="126",
+                area_production_farm_value="Wheat", uom="Acres", uom_id="28",
+                scalar_factor="units", scalar_id="0", vector="v004",
+                coordinate="1.4", value="500", status="", symbol="",
+                terminated="", decimals="0"
+            ),
+        ]
+        return records
+    
+    @pytest.fixture
+    def search_engine(self, sample_records):
+        """Create a SearchEngine instance with sample data."""
+        return SearchEngine.from_records(sample_records)
+    
+    def test_get_available_columns(self, search_engine):
+        """Test retrieving available column names."""
+        columns = list(search_engine._df.columns)
+        assert len(columns) > 0
+        assert 'GEO' in columns
+        assert 'VALUE' in columns
+        assert 'REF_DATE' in columns
+    
+    def test_simple_equality_search(self, search_engine):
+        """Test simple equality comparison."""
+        condition = SearchCondition(
+            column='GEO',
+            operator=ComparisonOperator.EQUALS,
+            value='Ontario'
+        )
+        results_df = search_engine.search([condition])
+        assert len(results_df) == 1
+        assert results_df.iloc[0]['GEO'] == 'Ontario'
+    
+    def test_numeric_comparison_greater_than(self, search_engine):
+        """Test numeric greater than comparison."""
+        condition = SearchCondition(
+            column='VALUE',
+            operator=ComparisonOperator.GREATER_THAN,
+            value='1000'
+        )
+        results_df = search_engine.search([condition])
+        assert len(results_df) == 2  # 2000 and 1500
+        for _, row in results_df.iterrows():
+            assert float(row['VALUE']) > 1000
+    
+    def test_numeric_comparison_less_than_or_equal(self, search_engine):
+        """Test numeric less than or equal comparison."""
+        condition = SearchCondition(
+            column='VALUE',
+            operator=ComparisonOperator.LESS_EQUAL,
+            value='1000'
+        )
+        results_df = search_engine.search([condition])
+        assert len(results_df) == 2  # 1000 and 500
+        for _, row in results_df.iterrows():
+            assert float(row['VALUE']) <= 1000
+    
+    def test_text_contains(self, search_engine):
+        """Test text contains operator."""
+        condition = SearchCondition(
+            column='Area, production and farm value of potatoes',
+            operator=ComparisonOperator.CONTAINS,
+            value='Wheat'
+        )
+        results_df = search_engine.search([condition])
+        assert len(results_df) == 2
+        for _, row in results_df.iterrows():
+            assert 'Wheat' in row['Area, production and farm value of potatoes']
+    
+    def test_text_startswith(self, search_engine):
+        """Test text startswith operator."""
+        condition = SearchCondition(
+            column='Area, production and farm value of potatoes',
+            operator=ComparisonOperator.STARTSWITH,
+            value='W'
+        )
+        results_df = search_engine.search([condition])
+        assert len(results_df) == 2
+        for _, row in results_df.iterrows():
+            assert row['Area, production and farm value of potatoes'].startswith('W')
+    
+    def test_text_endswith(self, search_engine):
+        """Test text endswith operator."""
+        condition = SearchCondition(
+            column='UOM',
+            operator=ComparisonOperator.ENDSWITH,
+            value='s'
+        )
+        results_df = search_engine.search([condition])
+        assert len(results_df) >= 1
+        for _, row in results_df.iterrows():
+            assert row['UOM'].endswith('s')
+    
+    def test_multiple_conditions_and(self, search_engine):
+        """Test multiple conditions with AND logic."""
+        conditions = [
+            SearchCondition(
+                column='REF_DATE',
+                operator=ComparisonOperator.EQUALS,
+                value='2020'
+            ),
+            SearchCondition(
+                column='GEO',
+                operator=ComparisonOperator.CONTAINS,
+                value='a'
+            )
+        ]
+        results_df = search_engine.search(
+            conditions, 
+            boolean_op=BooleanOperator.AND
+        )
+        assert len(results_df) == 2  # Canada and Ontario in 2020
+        for _, row in results_df.iterrows():
+            assert row['REF_DATE'] == '2020'
+            assert 'a' in row['GEO'].lower()
+    
+    def test_multiple_conditions_or(self, search_engine):
+        """Test multiple conditions with OR logic."""
+        conditions = [
+            SearchCondition(
+                column='GEO',
+                operator=ComparisonOperator.EQUALS,
+                value='Canada'
+            ),
+            SearchCondition(
+                column='GEO',
+                operator=ComparisonOperator.EQUALS,
+                value='Quebec'
+            )
+        ]
+        results_df = search_engine.search(
+            conditions,
+            boolean_op=BooleanOperator.OR
+        )
+        assert len(results_df) == 2  # Canada or Quebec
+        geos = {row['GEO'] for _, row in results_df.iterrows()}
+        assert geos == {'Canada', 'Quebec'}
+    
+    def test_not_equals(self, search_engine):
+        """Test not equals comparison."""
+        condition = SearchCondition(
+            column='UOM',
+            operator=ComparisonOperator.NOT_EQUALS,
+            value='Bushels'
+        )
+        results_df = search_engine.search([condition])
+        for _, row in results_df.iterrows():
+            assert row['UOM'] != 'Bushels'
+    
+    def test_empty_results(self, search_engine):
+        """Test search that returns no results."""
+        condition = SearchCondition(
+            column='GEO',
+            operator=ComparisonOperator.EQUALS,
+            value='NonexistentLocation'
+        )
+        results_df = search_engine.search([condition])
+        assert len(results_df) == 0
+    
+    def test_get_summary_statistics(self, search_engine):
+        """Test getting summary statistics."""
+        condition = SearchCondition(
+            column='REF_DATE',
+            operator=ComparisonOperator.EQUALS,
+            value='2020'
+        )
+        results_df = search_engine.search([condition])
+        stats = results_df.describe()
+        assert len(stats) > 0  # Should have count, mean, std, etc.
+    
+    def test_export_to_csv(self, search_engine):
+        """Test exporting search results to CSV."""
+        condition = SearchCondition(
+            column='GEO',
+            operator=ComparisonOperator.CONTAINS,
+            value='a'
+        )
+        results_df = search_engine.search([condition])
+        
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as temp_file:
+            temp_filename = temp_file.name
+        
+        try:
+            results_df.to_csv(temp_filename, index=False)
+            assert os.path.exists(temp_filename)
+            
+            # Verify file has content
+            with open(temp_filename, 'r') as f:
+                content = f.read()
+                assert len(content) > 0
+                assert 'GEO' in content
         finally:
             if os.path.exists(temp_filename):
                 os.unlink(temp_filename)

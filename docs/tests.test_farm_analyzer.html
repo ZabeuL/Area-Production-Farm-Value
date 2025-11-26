@@ -44,6 +44,7 @@ Author:&nbsp;Lucas&nbsp;Zabeu</span></p>
 </dt><dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestFarmDataService">TestFarmDataService</a>
 </dt><dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestFarmDataUI">TestFarmDataUI</a>
 </dt><dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestIntegration">TestIntegration</a>
+</dt><dt class="heading-text"><a href="tests.test_farm_analyzer.html#TestSearchEngine">TestSearchEngine</a>
 </dt></dl>
 </dd>
 </dl>
@@ -189,6 +190,53 @@ Data descriptors defined here:<br>
 <tr><td>&nbsp;</td>
 <td class="singlecolumn">Methods defined here:<br>
 <dl><dt><a name="TestIntegration-test_end_to_end_workflow"><strong>test_end_to_end_workflow</strong></a>(self)</dt><dd><span class="code">Test&nbsp;complete&nbsp;workflow&nbsp;from&nbsp;UI&nbsp;to&nbsp;persistence.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="TestSearchEngine">class <strong>TestSearchEngine</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code">Test&nbsp;cases&nbsp;for&nbsp;the&nbsp;SearchEngine&nbsp;class.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="TestSearchEngine-sample_records"><strong>sample_records</strong></a>(self)</dt><dd><span class="code">Create&nbsp;sample&nbsp;records&nbsp;for&nbsp;search&nbsp;testing.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-search_engine"><strong>search_engine</strong></a>(self, sample_records)</dt><dd><span class="code">Create&nbsp;a&nbsp;SearchEngine&nbsp;instance&nbsp;with&nbsp;sample&nbsp;data.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_empty_results"><strong>test_empty_results</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;search&nbsp;that&nbsp;returns&nbsp;no&nbsp;results.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_export_to_csv"><strong>test_export_to_csv</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;exporting&nbsp;search&nbsp;results&nbsp;to&nbsp;CSV.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_get_available_columns"><strong>test_get_available_columns</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;retrieving&nbsp;available&nbsp;column&nbsp;names.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_get_summary_statistics"><strong>test_get_summary_statistics</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;getting&nbsp;summary&nbsp;statistics.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_multiple_conditions_and"><strong>test_multiple_conditions_and</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;multiple&nbsp;conditions&nbsp;with&nbsp;AND&nbsp;logic.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_multiple_conditions_or"><strong>test_multiple_conditions_or</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;multiple&nbsp;conditions&nbsp;with&nbsp;OR&nbsp;logic.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_not_equals"><strong>test_not_equals</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;not&nbsp;equals&nbsp;comparison.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_numeric_comparison_greater_than"><strong>test_numeric_comparison_greater_than</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;numeric&nbsp;greater&nbsp;than&nbsp;comparison.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_numeric_comparison_less_than_or_equal"><strong>test_numeric_comparison_less_than_or_equal</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;numeric&nbsp;less&nbsp;than&nbsp;or&nbsp;equal&nbsp;comparison.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_simple_equality_search"><strong>test_simple_equality_search</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;simple&nbsp;equality&nbsp;comparison.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_text_contains"><strong>test_text_contains</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;text&nbsp;contains&nbsp;operator.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_text_endswith"><strong>test_text_endswith</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;text&nbsp;endswith&nbsp;operator.</span></dd></dl>
+
+<dl><dt><a name="TestSearchEngine-test_text_startswith"><strong>test_text_startswith</strong></a>(self, search_engine)</dt><dd><span class="code">Test&nbsp;text&nbsp;startswith&nbsp;operator.</span></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>

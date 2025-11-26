@@ -12,20 +12,24 @@ This project implements a three-layered architecture pattern:
 - **Purpose**: Handles all user interactions and display logic
 - **Components**:
   - `FarmDataUI`: Interactive menu-driven user interface
+  - `SearchUI`: Rich-formatted interactive search interface
 - **Responsibilities**:
   - Display menus and prompts
   - Process user input and validation
-  - Format and display data to users
+  - Format and display data to users (including rich tables)
   - Coordinate with business layer for operations
+  - Provide interactive search experience
 
 ### 🧠 **Business Layer** (`src/business/`)
 - **Purpose**: Contains application logic and manages in-memory data
 - **Components**:
   - `FarmDataService`: Core business logic and data management
+  - `SearchEngine`: Advanced search and filtering with pandas
 - **Responsibilities**:
   - Manage the in-memory data structure (list of records)
   - Implement CRUD operations (Create, Read, Update, Delete)
   - Provide search and filtering functionality
+  - Execute multi-column searches with complex operators
   - Coordinate between presentation and persistence layers
 
 ### 💾 **Persistence Layer** (`src/persistence/`)
@@ -63,6 +67,14 @@ This project implements a three-layered architecture pattern:
    - Sort records by any field using Timsort (O(n log n))
    - View top N records with analytical queries
    - Use set data structure for unique value extraction
+6. **Advanced Search System** (NEW):
+   - Multi-column filtering with pandas DataFrame operations
+   - Comparison operators: ==, !=, >, <, >=, <=
+   - Text operators: contains, regex, startswith, endswith
+   - Boolean logic: AND/OR for combining conditions
+   - Rich-formatted table display of results
+   - Export filtered results to CSV
+   - Summary statistics on search results
 
 ### � **Data Structures & Algorithms Implementation**
 
@@ -94,12 +106,41 @@ The application demonstrates practical use of core Python data structures and al
 - **Unique Values**: Extract unique geographic locations, measurement types, etc.
 - **Stable Sorting**: Maintains relative order of equal elements
 
-### �🛡️ **Error Handling**
+### 🛡️ **Error Handling**
 - Comprehensive exception handling for file operations
 - Input validation for user interactions
 - Graceful handling of missing files or permissions
 - Safe numeric conversion for sorting operations
 - User-friendly error messages throughout
+
+## Installation
+
+### Prerequisites
+- Python 3.7 or higher
+- pip (Python package installer)
+
+### Required Libraries
+```bash
+# Install required dependencies
+pip install pandas rich pytest
+```
+
+**Dependencies:**
+- `pandas` (2.3.3+) - DataFrame operations for advanced search
+- `rich` - Console formatting and interactive tables
+- `pytest` (8.4.2+) - Testing framework
+
+**Standard Library (no installation needed):**
+- `csv` - CSV file operations
+- `typing` - Type hints
+- `dataclasses` - Data class decorators
+- `enum` - Enumerations
+- `re` - Regular expressions
+
+### Quick Start
+1. Clone or download the project
+2. Install dependencies: `pip install pandas rich pytest`
+3. Run the application: `python main.py`
 
 ## Usage
 
@@ -125,7 +166,8 @@ data/CST8333-Area, production  farm value (32100358).csv
 8. **Search records** - Find records by term matching
 9. **Sort records** - Sort by any field using algorithms (Timsort O(n log n))
 10. **View top N records** - Analytical queries without modifying data
-11. **Exit application** - Close the program
+11. **Advanced Search** - Interactive multi-column filtering system (NEW)
+12. **Exit application** - Close the program
 
 ### Example Use Cases
 
@@ -141,6 +183,15 @@ data/CST8333-Area, production  farm value (32100358).csv
 - "List unique geographic regions in dataset"
 - "Compare regions by sorted area values"
 
+**Advanced Search Examples:**
+- Find all records from "Ontario" with value > 10000
+- Search for records containing "Wheat" AND from year "2020"
+- Filter records where UOM equals "Acres" OR "Hectares"
+- Find all records with GEO starting with "British"
+- Complex queries: (VALUE > 5000 AND GEO contains "Canada") OR (REF_DATE == "2021")
+- Export filtered results to CSV for further analysis
+- View summary statistics on filtered datasets
+
 ## Project Structure
 
 ```
@@ -148,10 +199,12 @@ data/CST8333-Area, production  farm value (32100358).csv
 ├── 📁 src/
 │   ├── 📁 presentation/          # UI Layer
 │   │   ├── __init__.py
-│   │   └── farm_data_ui.py       # Interactive user interface
+│   │   ├── farm_data_ui.py       # Interactive user interface
+│   │   └── search_ui.py          # Rich-formatted search UI (NEW)
 │   ├── 📁 business/              # Business Logic Layer
 │   │   ├── __init__.py
-│   │   └── farm_data_service.py  # Data management & operations
+│   │   ├── farm_data_service.py  # Data management & operations
+│   │   └── search_engine.py      # Advanced search engine (NEW)
 │   ├── 📁 persistence/           # Data Access Layer
 │   │   ├── __init__.py
 │   │   └── farm_data_repository.py # File I/O operations
@@ -159,17 +212,19 @@ data/CST8333-Area, production  farm value (32100358).csv
 │   │   ├── __init__.py
 │   │   └── farm_data_record.py   # Farm record entity
 │   └── __init__.py
-├── 📁 tests/                     # Unit tests
+├── 📁 tests/                     # Unit tests (38 tests)
 │   ├── __init__.py
-│   └── test_farm_analyzer.py
+│   ├── test_farm_analyzer.py     # Comprehensive test suite
+│   └── test_libraries.py         # Library verification tests
 ├── 📁 data/                      # Dataset files
 │   └── CST8333-Area, production  farm value (32100358).csv
 ├── 📁 docs/                      # Generated documentation
-│   ├── index.html               # Documentation index
-│   └── *.html                   # Module documentation
-├── main.py                      # Application entry point
-├── generate_docs.py             # Documentation generator
-└── README.md                    # This file
+│   ├── index.html                # Documentation index
+│   └── *.html                    # Module documentation
+├── main.py                       # Application entry point
+├── generate_docs.py              # Documentation generator
+├── DATA_STRUCTURES_ALGORITHMS.md # Algorithm implementation guide
+└── README.md                     # This file
 ```
 
 ## Technical Implementation
@@ -185,6 +240,15 @@ data/CST8333-Area, production  farm value (32100358).csv
   - Stable sorting preserves relative order of equal elements
   - Key-based comparators using `operator.attrgetter` and lambda functions
   - Multi-key sorting for deterministic results
+
+- **Advanced Search Engine**: Pandas-powered filtering system
+  - DataFrame-based operations for efficient filtering
+  - Multiple operator types (comparison, text, boolean)
+  - Type-aware value conversion
+  - Rich-formatted output tables
+  - Query result caching and refinement
+
+See `DATA_STRUCTURES_ALGORITHMS.md` for detailed implementation guide.
 - **Data Structures**:
   - **List**: Primary container for sequential record storage and manipulation
   - **Set**: Fast duplicate detection and unique value extraction (O(1) average case)
@@ -233,6 +297,7 @@ The project includes comprehensive unit tests for all layers:
 - **Entity Tests**: `TestFarmDataRecord` - Tests data model functionality
 - **Persistence Tests**: `TestFarmDataRepository` - Tests file I/O operations
 - **Business Tests**: `TestFarmDataService` - Tests business logic, CRUD operations, and algorithms
+- **Search Engine Tests**: `TestSearchEngine` - Tests advanced search functionality (NEW)
 - **Presentation Tests**: `TestFarmDataUI` - Tests UI initialization
 - **Integration Tests**: `TestIntegration` - Tests end-to-end workflows
 
@@ -254,15 +319,19 @@ python -m pytest tests/test_farm_analyzer.py::TestFarmDataRecord::test_accessors
 - ✅ Business layer: CRUD operations, search, filtering, data management
 - ✅ **Algorithms**: Sorting by different fields, ascending/descending order, invalid field handling
 - ✅ **Data Structures**: Top N records, unique value extraction using sets
+- ✅ **Search Engine**: Comparison operators, text operators, boolean logic, CSV export (NEW)
 - ✅ Presentation layer: UI initialization and author attribution
 - ✅ Integration: End-to-end workflow testing
 
 ### Test Results
-All **25 tests** pass successfully, including:
-- 5 new tests for sorting and data structure operations
+All **38 tests** pass successfully, including:
+- 5 tests for sorting and data structure operations
+- 13 tests for advanced search functionality (NEW)
 - Validation of O(n log n) sorting algorithm behavior
 - Set-based unique value extraction
 - Top N analytical queries
+- Pandas DataFrame filtering operations
+- Multi-condition search with AND/OR logic
 # Run all tests
 python -m pytest tests/test_farm_analyzer.py -v
 

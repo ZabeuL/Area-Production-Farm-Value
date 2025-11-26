@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module src.business.search_engine</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="src.html" class="white">src</a>.<a href="src.business.html" class="white">business</a>.search_engine</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Clucas%5Conedrive%5Ccollege%5Calgonquin%5Cterm%204%5Cprogramming%20language%20research%20project%5Careaproductionfarmvalue%5Carea-production-farm-value%5Csrc%5Cbusiness%5Csearch_engine.py">c:\users\lucas\onedrive\college\algonquin\term 4\programming language research project\areaproductionfarmvalue\area-production-farm-value\src\business\search_engine.py</a></td></tr></table>
+    <p><span class="code">search_engine.py<br>
+&nbsp;<br>
+Business&nbsp;layer&nbsp;for&nbsp;advanced&nbsp;search&nbsp;and&nbsp;filtering&nbsp;operations&nbsp;using&nbsp;pandas.<br>
+Provides&nbsp;interactive&nbsp;search&nbsp;capabilities&nbsp;with&nbsp;multiple&nbsp;operators,&nbsp;boolean&nbsp;logic,<br>
+and&nbsp;type-aware&nbsp;filtering.<br>
+&nbsp;<br>
+Classes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SearchEngine">SearchEngine</a>:&nbsp;Advanced&nbsp;search&nbsp;and&nbsp;filtering&nbsp;engine&nbsp;for&nbsp;farm&nbsp;data.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SearchCondition">SearchCondition</a>:&nbsp;Represents&nbsp;a&nbsp;single&nbsp;search&nbsp;condition&nbsp;with&nbsp;operator&nbsp;and&nbsp;value.<br>
+&nbsp;<br>
+Author:&nbsp;Lucas&nbsp;Zabeu</span></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="pandas.html">pandas</a><br>
+</td><td class="multicolumn"><a href="re.html">re</a><br>
+</td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="src.business.search_engine.html#SearchCondition">SearchCondition</a>
+</dt><dt class="heading-text"><a href="src.business.search_engine.html#SearchEngine">SearchEngine</a>
+</dt></dl>
+</dd>
+<dt class="heading-text"><a href="enum.html#Enum">enum.Enum</a>(<a href="builtins.html#object">builtins.object</a>)
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="src.business.search_engine.html#BooleanOperator">BooleanOperator</a>
+</dt><dt class="heading-text"><a href="src.business.search_engine.html#ComparisonOperator">ComparisonOperator</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="BooleanOperator">class <strong>BooleanOperator</strong></a>(<a href="enum.html#Enum">enum.Enum</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#BooleanOperator">BooleanOperator</a>(*values)<br>
+&nbsp;<br>
+Enumeration&nbsp;of&nbsp;boolean&nbsp;logic&nbsp;operators.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="src.business.search_engine.html#BooleanOperator">BooleanOperator</a></dd>
+<dd><a href="enum.html#Enum">enum.Enum</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>AND</strong> = &lt;BooleanOperator.AND: 'AND'&gt;</dl>
+
+<dl><dt><strong>OR</strong> = &lt;BooleanOperator.OR: 'OR'&gt;</dl>
+
+<hr>
+Data descriptors inherited from <a href="enum.html#Enum">enum.Enum</a>:<br>
+<dl><dt><strong>name</strong></dt>
+<dd><span class="code">The&nbsp;name&nbsp;of&nbsp;the&nbsp;Enum&nbsp;member.</span></dd>
+</dl>
+<dl><dt><strong>value</strong></dt>
+<dd><span class="code">The&nbsp;value&nbsp;of&nbsp;the&nbsp;Enum&nbsp;member.</span></dd>
+</dl>
+<hr>
+Static methods inherited from <a href="enum.html#EnumType">enum.EnumType</a>:<br>
+<dl><dt><a name="BooleanOperator-__contains__"><strong>__contains__</strong></a>(value)</dt><dd><span class="code">Return&nbsp;True&nbsp;if&nbsp;`value`&nbsp;is&nbsp;in&nbsp;`cls`.<br>
+&nbsp;<br>
+`value`&nbsp;is&nbsp;in&nbsp;`cls`&nbsp;if:<br>
+1)&nbsp;`value`&nbsp;is&nbsp;a&nbsp;member&nbsp;of&nbsp;`cls`,&nbsp;or<br>
+2)&nbsp;`value`&nbsp;is&nbsp;the&nbsp;value&nbsp;of&nbsp;one&nbsp;of&nbsp;the&nbsp;`cls`'s&nbsp;members.<br>
+3)&nbsp;`value`&nbsp;is&nbsp;a&nbsp;pseudo-member&nbsp;(flags)</span></dd></dl>
+
+<dl><dt><a name="BooleanOperator-__getitem__"><strong>__getitem__</strong></a>(name)</dt><dd><span class="code">Return&nbsp;the&nbsp;member&nbsp;matching&nbsp;`name`.</span></dd></dl>
+
+<dl><dt><a name="BooleanOperator-__iter__"><strong>__iter__</strong></a>()</dt><dd><span class="code">Return&nbsp;members&nbsp;in&nbsp;definition&nbsp;order.</span></dd></dl>
+
+<dl><dt><a name="BooleanOperator-__len__"><strong>__len__</strong></a>()</dt><dd><span class="code">Return&nbsp;the&nbsp;number&nbsp;of&nbsp;members&nbsp;(no&nbsp;aliases)</span></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="enum.html#EnumType">enum.EnumType</a>:<br>
+<dl><dt><strong>__members__</strong></dt>
+<dd><span class="code">Returns&nbsp;a&nbsp;mapping&nbsp;of&nbsp;member&nbsp;name-&gt;value.<br>
+&nbsp;<br>
+This&nbsp;mapping&nbsp;lists&nbsp;all&nbsp;enum&nbsp;members,&nbsp;including&nbsp;aliases.&nbsp;Note&nbsp;that&nbsp;this<br>
+is&nbsp;a&nbsp;read-only&nbsp;view&nbsp;of&nbsp;the&nbsp;internal&nbsp;mapping.</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="ComparisonOperator">class <strong>ComparisonOperator</strong></a>(<a href="enum.html#Enum">enum.Enum</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#ComparisonOperator">ComparisonOperator</a>(*values)<br>
+&nbsp;<br>
+Enumeration&nbsp;of&nbsp;supported&nbsp;comparison&nbsp;operators.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="src.business.search_engine.html#ComparisonOperator">ComparisonOperator</a></dd>
+<dd><a href="enum.html#Enum">enum.Enum</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>CONTAINS</strong> = &lt;ComparisonOperator.CONTAINS: 'contains'&gt;</dl>
+
+<dl><dt><strong>ENDSWITH</strong> = &lt;ComparisonOperator.ENDSWITH: 'endswith'&gt;</dl>
+
+<dl><dt><strong>EQUALS</strong> = &lt;ComparisonOperator.EQUALS: '=='&gt;</dl>
+
+<dl><dt><strong>GREATER_EQUAL</strong> = &lt;ComparisonOperator.GREATER_EQUAL: '&gt;='&gt;</dl>
+
+<dl><dt><strong>GREATER_THAN</strong> = &lt;ComparisonOperator.GREATER_THAN: '&gt;'&gt;</dl>
+
+<dl><dt><strong>LESS_EQUAL</strong> = &lt;ComparisonOperator.LESS_EQUAL: '&lt;='&gt;</dl>
+
+<dl><dt><strong>LESS_THAN</strong> = &lt;ComparisonOperator.LESS_THAN: '&lt;'&gt;</dl>
+
+<dl><dt><strong>NOT_EQUALS</strong> = &lt;ComparisonOperator.NOT_EQUALS: '!='&gt;</dl>
+
+<dl><dt><strong>REGEX</strong> = &lt;ComparisonOperator.REGEX: 'regex'&gt;</dl>
+
+<dl><dt><strong>STARTSWITH</strong> = &lt;ComparisonOperator.STARTSWITH: 'startswith'&gt;</dl>
+
+<hr>
+Data descriptors inherited from <a href="enum.html#Enum">enum.Enum</a>:<br>
+<dl><dt><strong>name</strong></dt>
+<dd><span class="code">The&nbsp;name&nbsp;of&nbsp;the&nbsp;Enum&nbsp;member.</span></dd>
+</dl>
+<dl><dt><strong>value</strong></dt>
+<dd><span class="code">The&nbsp;value&nbsp;of&nbsp;the&nbsp;Enum&nbsp;member.</span></dd>
+</dl>
+<hr>
+Static methods inherited from <a href="enum.html#EnumType">enum.EnumType</a>:<br>
+<dl><dt><a name="ComparisonOperator-__contains__"><strong>__contains__</strong></a>(value)</dt><dd><span class="code">Return&nbsp;True&nbsp;if&nbsp;`value`&nbsp;is&nbsp;in&nbsp;`cls`.<br>
+&nbsp;<br>
+`value`&nbsp;is&nbsp;in&nbsp;`cls`&nbsp;if:<br>
+1)&nbsp;`value`&nbsp;is&nbsp;a&nbsp;member&nbsp;of&nbsp;`cls`,&nbsp;or<br>
+2)&nbsp;`value`&nbsp;is&nbsp;the&nbsp;value&nbsp;of&nbsp;one&nbsp;of&nbsp;the&nbsp;`cls`'s&nbsp;members.<br>
+3)&nbsp;`value`&nbsp;is&nbsp;a&nbsp;pseudo-member&nbsp;(flags)</span></dd></dl>
+
+<dl><dt><a name="ComparisonOperator-__getitem__"><strong>__getitem__</strong></a>(name)</dt><dd><span class="code">Return&nbsp;the&nbsp;member&nbsp;matching&nbsp;`name`.</span></dd></dl>
+
+<dl><dt><a name="ComparisonOperator-__iter__"><strong>__iter__</strong></a>()</dt><dd><span class="code">Return&nbsp;members&nbsp;in&nbsp;definition&nbsp;order.</span></dd></dl>
+
+<dl><dt><a name="ComparisonOperator-__len__"><strong>__len__</strong></a>()</dt><dd><span class="code">Return&nbsp;the&nbsp;number&nbsp;of&nbsp;members&nbsp;(no&nbsp;aliases)</span></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="enum.html#EnumType">enum.EnumType</a>:<br>
+<dl><dt><strong>__members__</strong></dt>
+<dd><span class="code">Returns&nbsp;a&nbsp;mapping&nbsp;of&nbsp;member&nbsp;name-&gt;value.<br>
+&nbsp;<br>
+This&nbsp;mapping&nbsp;lists&nbsp;all&nbsp;enum&nbsp;members,&nbsp;including&nbsp;aliases.&nbsp;Note&nbsp;that&nbsp;this<br>
+is&nbsp;a&nbsp;read-only&nbsp;view&nbsp;of&nbsp;the&nbsp;internal&nbsp;mapping.</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="SearchCondition">class <strong>SearchCondition</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#SearchCondition">SearchCondition</a>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;column:&nbsp;str,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;operator:&nbsp;src.business.search_engine.<a href="#ComparisonOperator">ComparisonOperator</a>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value:&nbsp;Any,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;case_sensitive:&nbsp;bool&nbsp;=&nbsp;False<br>
+)&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+Represents&nbsp;a&nbsp;single&nbsp;search&nbsp;condition.<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;column:&nbsp;Column&nbsp;name&nbsp;to&nbsp;search&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;operator:&nbsp;Comparison&nbsp;operator&nbsp;to&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value:&nbsp;Value&nbsp;to&nbsp;compare&nbsp;against<br>
+&nbsp;&nbsp;&nbsp;&nbsp;case_sensitive:&nbsp;Whether&nbsp;string&nbsp;comparisons&nbsp;are&nbsp;case-sensitive<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="SearchCondition-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="SearchCondition-__init__"><strong>__init__</strong></a>(
+    self,
+    column: str,
+    operator: src.business.search_engine.ComparisonOperator,
+    value: Any,
+    case_sensitive: bool = False
+) -&gt; None</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="SearchCondition-__replace__"><strong>__replace__</strong></a> = _replace(self, /, **changes)<span class="grey"><span class="heading-text"> from <a href="dataclasses.html">dataclasses</a></span></span></dt></dl>
+
+<dl><dt><a name="SearchCondition-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'case_sensitive': &lt;class 'bool'&gt;, 'column': &lt;class 'str'&gt;, 'operator': &lt;enum 'ComparisonOperator'&gt;, 'value': typing.Any}</dl>
+
+<dl><dt><strong>__dataclass_fields__</strong> = {'case_sensitive': Field(name='case_sensitive',type=&lt;class 'bool'&gt;,...appingproxy({}),kw_only=False,_field_type=_FIELD), 'column': Field(name='column',type=&lt;class 'str'&gt;,default=&lt;...appingproxy({}),kw_only=False,_field_type=_FIELD), 'operator': Field(name='operator',type=&lt;enum 'ComparisonOper...appingproxy({}),kw_only=False,_field_type=_FIELD), 'value': Field(name='value',type=typing.Any,default=&lt;data...appingproxy({}),kw_only=False,_field_type=_FIELD)}</dl>
+
+<dl><dt><strong>__dataclass_params__</strong> = _DataclassParams(init=True,repr=True,eq=True,ord...rue,kw_only=False,slots=False,weakref_slot=False)</dl>
+
+<dl><dt><strong>__hash__</strong> = None</dl>
+
+<dl><dt><strong>__match_args__</strong> = ('column', 'operator', 'value', 'case_sensitive')</dl>
+
+<dl><dt><strong>case_sensitive</strong> = False</dl>
+
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="SearchEngine">class <strong>SearchEngine</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#SearchEngine">SearchEngine</a>(dataframe:&nbsp;pandas.core.frame.DataFrame)<br>
+&nbsp;<br>
+Advanced&nbsp;search&nbsp;engine&nbsp;for&nbsp;filtering&nbsp;farm&nbsp;data&nbsp;records.<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;provides&nbsp;sophisticated&nbsp;filtering&nbsp;capabilities&nbsp;including:<br>
+-&nbsp;Multiple&nbsp;comparison&nbsp;operators&nbsp;(==,&nbsp;!=,&nbsp;&gt;,&nbsp;&lt;,&nbsp;&gt;=,&nbsp;&lt;=)<br>
+-&nbsp;Text-based&nbsp;operators&nbsp;(contains,&nbsp;regex,&nbsp;startswith,&nbsp;endswith)<br>
+-&nbsp;Boolean&nbsp;logic&nbsp;(AND/OR)&nbsp;for&nbsp;combining&nbsp;conditions<br>
+-&nbsp;Type-aware&nbsp;value&nbsp;conversion<br>
+-&nbsp;Search&nbsp;refinement&nbsp;on&nbsp;previous&nbsp;results<br>
+&nbsp;<br>
+Uses&nbsp;pandas&nbsp;DataFrame&nbsp;for&nbsp;efficient&nbsp;filtering&nbsp;operations.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="SearchEngine-__init__"><strong>__init__</strong></a>(self, dataframe: pandas.core.frame.DataFrame)</dt><dd><span class="code">Initialize&nbsp;search&nbsp;engine&nbsp;with&nbsp;a&nbsp;pandas&nbsp;DataFrame.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dataframe:&nbsp;pandas&nbsp;DataFrame&nbsp;containing&nbsp;farm&nbsp;data&nbsp;records</span></dd></dl>
+
+<dl><dt><a name="SearchEngine-clear_results"><strong>clear_results</strong></a>(self) -&gt; None</dt><dd><span class="code">Clear&nbsp;last&nbsp;search&nbsp;results&nbsp;and&nbsp;history.</span></dd></dl>
+
+<dl><dt><a name="SearchEngine-export_to_csv"><strong>export_to_csv</strong></a>(
+    self,
+    filename: str,
+    df: Optional[pandas.core.frame.DataFrame] = None
+) -&gt; bool</dt><dd><span class="code">Export&nbsp;search&nbsp;results&nbsp;to&nbsp;CSV&nbsp;file.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;filename:&nbsp;Output&nbsp;CSV&nbsp;filename<br>
+&nbsp;&nbsp;&nbsp;&nbsp;df:&nbsp;DataFrame&nbsp;to&nbsp;export&nbsp;(uses&nbsp;last&nbsp;results&nbsp;if&nbsp;None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;if&nbsp;export&nbsp;successful,&nbsp;False&nbsp;otherwise</span></dd></dl>
+
+<dl><dt><a name="SearchEngine-get_available_columns"><strong>get_available_columns</strong></a>(self) -&gt; List[str]</dt><dd><span class="code">Get&nbsp;list&nbsp;of&nbsp;available&nbsp;column&nbsp;names.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;column&nbsp;names&nbsp;in&nbsp;the&nbsp;DataFrame</span></dd></dl>
+
+<dl><dt><a name="SearchEngine-get_column_type"><strong>get_column_type</strong></a>(self, column: str) -&gt; str</dt><dd><span class="code">Get&nbsp;the&nbsp;data&nbsp;type&nbsp;of&nbsp;a&nbsp;column.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;column:&nbsp;Column&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;representation&nbsp;of&nbsp;column&nbsp;data&nbsp;type</span></dd></dl>
+
+<dl><dt><a name="SearchEngine-get_last_results"><strong>get_last_results</strong></a>(self) -&gt; Optional[pandas.core.frame.DataFrame]</dt><dd><span class="code">Get&nbsp;the&nbsp;results&nbsp;from&nbsp;the&nbsp;last&nbsp;search.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;DataFrame&nbsp;of&nbsp;last&nbsp;search&nbsp;results,&nbsp;or&nbsp;None&nbsp;if&nbsp;no&nbsp;search&nbsp;performed</span></dd></dl>
+
+<dl><dt><a name="SearchEngine-get_summary_statistics"><strong>get_summary_statistics</strong></a>(self, df: Optional[pandas.core.frame.DataFrame] = None) -&gt; Dict[str, Any]</dt><dd><span class="code">Get&nbsp;summary&nbsp;statistics&nbsp;for&nbsp;numeric&nbsp;columns&nbsp;in&nbsp;the&nbsp;DataFrame.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;df:&nbsp;DataFrame&nbsp;to&nbsp;analyze&nbsp;(uses&nbsp;last&nbsp;results&nbsp;if&nbsp;None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dictionary&nbsp;containing&nbsp;summary&nbsp;statistics</span></dd></dl>
+
+<dl><dt><a name="SearchEngine-get_unique_values"><strong>get_unique_values</strong></a>(
+    self,
+    column: str,
+    df: Optional[pandas.core.frame.DataFrame] = None
+) -&gt; List[Any]</dt><dd><span class="code">Get&nbsp;unique&nbsp;values&nbsp;from&nbsp;a&nbsp;column.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;column:&nbsp;Column&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;df:&nbsp;DataFrame&nbsp;to&nbsp;analyze&nbsp;(uses&nbsp;last&nbsp;results&nbsp;if&nbsp;None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;unique&nbsp;values&nbsp;sorted</span></dd></dl>
+
+<dl><dt><a name="SearchEngine-search"><strong>search</strong></a>(
+    self,
+    conditions: List[src.business.search_engine.SearchCondition],
+    boolean_op: src.business.search_engine.BooleanOperator = &lt;BooleanOperator.AND: 'AND'&gt;,
+    refine_previous: bool = False
+) -&gt; pandas.core.frame.DataFrame</dt><dd><span class="code">Execute&nbsp;a&nbsp;search&nbsp;with&nbsp;multiple&nbsp;conditions.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;conditions:&nbsp;List&nbsp;of&nbsp;search&nbsp;conditions&nbsp;to&nbsp;apply<br>
+&nbsp;&nbsp;&nbsp;&nbsp;boolean_op:&nbsp;Boolean&nbsp;operator&nbsp;to&nbsp;combine&nbsp;conditions&nbsp;(AND/OR)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;refine_previous:&nbsp;If&nbsp;True,&nbsp;search&nbsp;within&nbsp;previous&nbsp;results<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;DataFrame&nbsp;containing&nbsp;matching&nbsp;records</span></dd></dl>
+
+<hr>
+Class methods defined here:<br>
+<dl><dt><a name="SearchEngine-from_records"><strong>from_records</strong></a>(records: List) -&gt; 'SearchEngine'</dt><dd><span class="code">Create&nbsp;a&nbsp;<a href="#SearchEngine">SearchEngine</a>&nbsp;from&nbsp;a&nbsp;list&nbsp;of&nbsp;FarmDataRecord&nbsp;objects.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;records:&nbsp;List&nbsp;of&nbsp;FarmDataRecord&nbsp;objects<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#SearchEngine">SearchEngine</a>&nbsp;instance&nbsp;initialized&nbsp;with&nbsp;records</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>COLUMN_MAPPING</strong> = {'area_production_farm_value': 'Area, production and farm value of potatoes', 'coordinate': 'COORDINATE', 'decimals': 'DECIMALS', 'dguid': 'DGUID', 'geo': 'GEO', 'ref_date': 'REF_DATE', 'scalar_factor': 'SCALAR_FACTOR', 'scalar_id': 'SCALAR_ID', 'status': 'STATUS', 'symbol': 'SYMBOL', ...}</dl>
+
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>Dict</strong> = typing.Dict<br>
+<strong>List</strong> = typing.List<br>
+<strong>Optional</strong> = typing.Optional<br>
+<strong>Tuple</strong> = typing.Tuple</td></tr></table>
+</body></html>

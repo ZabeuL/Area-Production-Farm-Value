@@ -15,6 +15,7 @@ import sys
 from typing import Optional
 from ..business.farm_data_service import FarmDataService
 from ..entities.farm_data_record import FarmDataRecord
+from .search_ui import SearchUI
 
 
 class FarmDataUI:
@@ -32,6 +33,7 @@ class FarmDataUI:
         """Initialize the UI with a business service."""
         self._service = FarmDataService()
         self._author_name = "Lucas Zabeu"
+        self._search_ui = None
     
     def display_header(self) -> None:
         """
@@ -60,7 +62,8 @@ class FarmDataUI:
         print("8. Search records")
         print("9. Sort records (Data Structures & Algorithms)")
         print("10. View top N records")
-        print("11. Exit application")
+        print("11. Advanced Search (Interactive Multi-Column Filtering)")
+        print("12. Exit application")
         print("-" * 50)
     
     def get_user_choice(self) -> str:
@@ -71,10 +74,10 @@ class FarmDataUI:
             User's menu choice as a string.
         """
         while True:
-            choice = input(f"Enter your choice (1-11) [{self._author_name}]: ").strip()
-            if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']:
+            choice = input(f"Enter your choice (1-12) [{self._author_name}]: ").strip()
+            if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']:
                 return choice
-            print("Invalid choice. Please enter a number between 1 and 11.")
+            print("Invalid choice. Please enter a number between 1 and 12.")
     
     def handle_load_data(self) -> None:
         """Handle loading/reloading data from a CSV file."""
@@ -537,8 +540,29 @@ class FarmDataUI:
             elif choice == '10':
                 self.handle_top_n_records()
             elif choice == '11':
+                self.handle_advanced_search()
+            elif choice == '12':
                 print(f"\nThank you for using the Farm Data Analyzer!")
                 print(f"Application completed by {self._author_name}")
                 sys.exit(0)
             
             input(f"\nPress Enter to continue... (Author: {self._author_name})")
+    
+    def handle_advanced_search(self) -> None:
+        """Handle advanced search using the interactive search UI.
+        
+        This method provides access to the advanced search system that allows
+        multi-column filtering with comparison and text operators, boolean logic,
+        and rich-formatted result display.
+        """
+        if self._service.record_count == 0:
+            print(f"\nNo data in memory. Please load data first.")
+            print(f"Tip: Use option 1 to load data from the CSV file.")
+            return
+        
+        # Lazy initialize search UI
+        if self._search_ui is None:
+            self._search_ui = SearchUI(self._service)
+        
+        # Run the search interface
+        self._search_ui.handle_search_interactive()
